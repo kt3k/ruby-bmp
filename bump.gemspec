@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Bump::VERSION
   spec.authors       = ["Yoshiya Hinosawa"]
   spec.email         = ["stibium121@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = "Bump versions in a repository"
+  spec.summary       = "Bump versions in a repository"
   spec.homepage      = ""
   spec.license       = "MIT"
 
