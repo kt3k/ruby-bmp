@@ -4,17 +4,12 @@
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'bump'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install bump
+```sh
+git clone git@github.com:kt3k/bump.git
+cd bump
+gem build bump.gemspec
+gem install bump-0.1.0.gem
+```
 
 ## Usage
 
