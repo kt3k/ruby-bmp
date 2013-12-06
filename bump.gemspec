@@ -8,10 +8,10 @@ Gem::Specification.new do |spec|
   spec.version       = Bump::VERSION
   spec.authors       = ["Yoshiya Hinosawa"]
   spec.email         = ["stibium121@gmail.com"]
-  spec.description   = "Bump versions in a repository"
-  spec.summary       = "Bump versions in a repository"
-  spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.description   = "Bump version numbers in a repository"
+  spec.summary       = "Bump version numbers in a repository"
+  spec.homepage      = "https://github.com/kt3k/bump"
+  spec.license       = "MIT License"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
