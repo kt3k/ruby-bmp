@@ -1,4 +1,4 @@
-# Bump
+# Bump v0.0.1
 
 > Bump version info in a repository
 
