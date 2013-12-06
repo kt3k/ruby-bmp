@@ -1,0 +1,5 @@
+---
+version: 0.0.1
+files:
+  README.md: Bump v%.%.%
+  lib/bump/version.rb: VERSION = "%.%.%"
