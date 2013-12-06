@@ -1,6 +1,6 @@
 # Bump
 
-Bump version info in a repository
+> Bump version info in a repository
 
 ## Installation
 
@@ -18,9 +18,26 @@ Or install it yourself as:
 
 ## Usage
 
+bump patch (0.0.1) level:
 ```
-bump [-s|-m|-l] [-f]
+bump -s
 ```
+
+bump minor (0.1.0) level:
+```
+bump -m
+```
+
+bump major (1.0.0) level:
+```
+bump -l
+```
+
+commit diffs with bump comment:
+```
+bump -f
+```
+
 
 ## Contributing
 
