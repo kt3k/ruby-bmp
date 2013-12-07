@@ -14,7 +14,7 @@ This install `bump` command
 
 ### version descriptor
 
-put `.version` file on the top of your repository like following:
+put `.version` file on the top of your repository like following (which is `YAML`):
 
 ```
 ---
