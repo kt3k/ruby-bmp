@@ -28,7 +28,7 @@ files:
 
 `version` value is the current version number of the repository.
 
-`files` is the map of the files which contain version numbers in them.
+`files` are the mappings of the files which contain version numbers in them.
 
 ```
 gradle.properties: version=%.%.%
