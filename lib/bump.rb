@@ -43,7 +43,7 @@ module Bump
 
     end
 
-    class BumpRule
+    class FileRewriteRule
 
         PLACEHOLDER_PATTERN = '%.%.%'
 
@@ -103,7 +103,7 @@ module Bump
             p after_version = version.to_s()
 
             config['files'].each do |file, param|
-                conversion = BumpRule.new(file, param, before_version, after_version).prepare.perform
+                conversion = FileRewriteRule.new(file, param, before_version, after_version).prepare.perform
             end
 
             config['version'] = after_version
