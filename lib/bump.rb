@@ -47,32 +47,41 @@ module Bump
 
         PLACEHOLDER_PATTERN = '%.%.%'
 
-        def initialize(file, param, before_version, after_version)
+        def initialize(file, pattern, before_version, after_version)
             @file = file
-            @param = param
+            @pattern = pattern || PLACEHOLDER_PATTERN # default pattern is '%.%.%'
             @before_version = before_version
             @after_version = after_version
+
+            prepare
         end
 
         def prepare
-            case @param
-            when String
-                @pattern = @param
-            else
-                @pattern = PLACEHOLDER_PATTERN
-            end
-
-            return self
+            @before_pattern = @pattern.sub PLACEHOLDER_PATTERN, @before_version
+            @after_pattern = @pattern.sub PLACEHOLDER_PATTERN, @after_version
         end
 
         def perform
-            before_pattern = @pattern.sub PLACEHOLDER_PATTERN, @before_version
-            after_pattern = @pattern.sub PLACEHOLDER_PATTERN, @after_version
-
             contents = File.read @file, :encoding => Encoding::UTF_8
-            File.write @file, contents.sub(before_pattern, after_pattern)
+            File.write @file, contents.sub(@before_pattern, @after_pattern)
         end
 
+    end
+
+    class FileRewriteRuleFactory
+
+        def self.create(file, param, before_version, after_version)
+
+            case param
+            when String
+                return FileRewriteRule.new file, param, before_version, after_version
+            when Array
+                return param.map { |param| FileRewriteRule.new file, param, before_version, after_version }.flatten
+            else
+                return FileRewriteRule.new file, nil, before_version, after_version
+            end
+
+        end
     end
 
     class CLI
@@ -102,9 +111,13 @@ module Bump
 
             p after_version = version.to_s()
 
-            config['files'].each do |file, param|
-                conversion = FileRewriteRule.new(file, param, before_version, after_version).prepare.perform
-            end
+            p config['files'].map { |file, param|
+                FileRewriteRuleFactory.create(file, param, before_version, after_version)
+
+            }.flatten.each { |rewriteRule|
+                rewriteRule.perform
+
+            }
 
             config['version'] = after_version
 
