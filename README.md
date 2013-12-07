@@ -8,7 +8,35 @@
 gem install verbump
 ```
 
+This install `bump` command
+
 ## Usage
+
+### version descriptor
+
+put `.version` file on the top of your repository like following:
+
+```
+---
+version: 0.1.6
+files:
+  gradle.properties: version=%.%.%
+  README.md:
+  - coveralls-gradle-plugin v%.%.%
+  - org.kt3k.gradle.plugin:coveralls-gradle-plugin:%.%.%
+```
+
+`version` value is the current version number of the repository.
+
+`files` is the map of the files which contain version numbers in them.
+
+```
+gradle.properties: version=%.%.%
+```
+
+The expression above means the file `./gradle.properties` contains the string `version=0.1.6` (because the current version is 0.1.6) and `%.%.%` is the placeholder for current version number and will updated on version bumps.
+
+### bump command
 
 bump patch (0.0.1) level:
 ```
@@ -29,7 +57,6 @@ commit diffs with bump comment:
 ```
 bump -f
 ```
-
 
 ## Contributing
 
