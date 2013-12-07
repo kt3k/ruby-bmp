@@ -5,10 +5,7 @@
 ## Installation
 
 ```sh
-git clone git@github.com:kt3k/bump.git
-cd bump
-gem build bump.gemspec
-gem install bump-0.1.0.gem
+gem install verbump
 ```
 
 ## Usage
