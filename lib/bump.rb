@@ -261,7 +261,7 @@ module Bump
             repo.save srv
 
             if @options[:fix]
-                @logger.log `git add . ; git commit -m "Bump to version v#{after_version}"`
+                @logger.log `git add . ; git commit -m "Bump to version v#{srv.afterVersion}"`
             end
         end
 
