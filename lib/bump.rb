@@ -2,6 +2,7 @@
 require 'bump/version'
 require 'yaml'
 require 'optparse'
+require 'slop'
 
 module Bump
 
@@ -59,11 +60,30 @@ module Bump
             @after_pattern = @pattern.sub PLACEHOLDER_PATTERN, @after_version
         end
 
+        def file
+            @file
+        end
+
+        def beforePattern
+            @before_pattern
+        end
+
+        def afterPattern
+            @after_pattern
+        end
+
         def perform
             prepare
 
             contents = File.read @file, :encoding => Encoding::UTF_8
-            File.write @file, contents.sub(@before_pattern, @after_pattern)
+
+            if contents.index @before_pattern
+                File.write @file, contents.sub(@before_pattern, @after_pattern)
+
+                return true
+            else
+                return false
+            end
         end
 
     end
@@ -134,14 +154,15 @@ module Bump
             @config
         end
 
-        def performFileRewrite
-            @rewrite_rules = config['files'].map { |file, param|
+        def rewriteRules
+            return config['files'].map { |file, param|
                 FileRewriteRuleFactory.create(file, param, @before_version, @after_version)
             }.flatten
+        end
 
-            p @rewrite_rules
+        def performFileRewrite
 
-            @rewrite_rules.each do |rewrite_rule|
+            rewriteRules.each do |rewrite_rule|
                 rewrite_rule.perform
             end
         end
@@ -166,24 +187,69 @@ module Bump
 
             p srv.config
 
-            opt = OptionParser.new
+            opts = Slop.parse do
+                banner 'Usage: bump [-p|--patch] [-m|--minor] [-j|--major] [-f|--fix]'
 
-            commit_file = false
+                on :p, :patch, 'bump patch (0.0.1) level'
+                on :m, :minor, 'bump minor (0.1.0) level'
+                on :j, :major, 'bump major (1.0.0) level'
+                on :f, :fix, 'fix bumping and commit current changes (git required)'
+                on :h, :help, 'show this help and exit'
+                on :v, :version, 'show version and exit' do
+                    puts "bump v#{Bump::VERSION}"
 
-            opt.on('-l') { |x| srv.majorBump }
-            opt.on('-m') { |x| srv.minorBump }
-            opt.on('-s') { |x| srv.patchBump }
-            opt.on('-f') { |x| commit_file = true }
+                    exit
+                end
+            end
 
-            opt.parse!(ARGV)
+            puts opts.to_hash
 
-            p srv.config
+            if opts.help?
+                puts opts
 
-            srv.performFileRewrite
+                exit
+            end
+
+            if opts.patch?
+                srv.patchBump
+
+                puts 'Bump patch level'
+                puts "#{srv.beforeVersion} => #{srv.afterVersion}"
+            end
+
+            if opts.minor?
+                srv.minorBump
+
+                puts 'Bump minor level'
+                puts "#{srv.beforeVersion} => #{srv.afterVersion}"
+            end
+
+            if opts.major?
+                srv.majorBump
+
+                puts 'Bump major level'
+                puts "#{srv.beforeVersion} => #{srv.afterVersion}"
+            end
+
+            puts
+
+            srv.rewriteRules.each do |rule|
+                result = rule.perform
+
+                if result
+                    puts "#{rule.file}"
+                    puts "  Performed pattern replacement:"
+                    puts "  '#{rule.beforePattern}' => '#{rule.afterPattern}'"
+                    puts
+                else
+                    puts "  Current version pattern ('#{rule.beforePattern}') not found!"
+                    puts
+                end
+            end
 
             srv.saveConfig
 
-            if commit_file
+            if opts.fix?
                 puts `git add . ; git commit -m "Bump to version v#{after_version}"`
             end
 
