@@ -34,12 +34,14 @@ module Bump
             @major.to_s + '.' + @minor.to_s + '.' + @patch.to_s
         end
 
-        def self.createFromString(str)
+    end
 
+    class VersionFactory
+
+        def self.fromString(str)
             arr = str.split '.'
 
-            self.new arr[0].to_i, arr[1].to_i, arr[2].to_i
-
+            return Version.new arr[0].to_i, arr[1].to_i, arr[2].to_i
         end
 
     end
@@ -104,17 +106,31 @@ module Bump
         end
     end
 
-    class VersionBumpService
+    class VersionDescriptorRepository
 
-        def initialize(config, file)
-            @config = config
+        def initialize file
             @file = file
+        end
 
-            @version = Version.createFromString @config['version']
+        def fromFile
+            VersionDescriptor.new YAML.load_file @file
+        end
+
+        def save descriptor
+            File.write @file, descriptor.toYaml
+        end
+
+    end
+
+    class VersionDescriptor
+
+        def initialize config
+            @config = config
+
+            @version = VersionFactory.fromString @config['version']
 
             @before_version = @version.to_s
             @after_version = @version.to_s
-
 
         end
 
@@ -123,13 +139,8 @@ module Bump
             @config['version'] = @after_version
         end
 
-        def self.createFromFile file
-            config = YAML.load_file file
-            self.new config, file
-        end
-
-        def saveConfig
-            File.write @file, config.to_yaml
+        def toYaml
+            @config.to_yaml
         end
 
         def majorBump
@@ -155,16 +166,9 @@ module Bump
         end
 
         def rewriteRules
-            return config['files'].map { |file, param|
+            return @config['files'].map { |file, param|
                 FileRewriteRuleFactory.create(file, param, @before_version, @after_version)
             }.flatten
-        end
-
-        def performFileRewrite
-
-            rewriteRules.each do |rewrite_rule|
-                rewrite_rule.perform
-            end
         end
 
         def afterVersion
@@ -183,7 +187,9 @@ module Bump
 
         def main
 
-            srv = VersionBumpService.createFromFile VERSION_FILE
+            repo = VersionDescriptorRepository.new VERSION_FILE
+
+            srv = repo.fromFile
 
             p srv.config
 
@@ -247,7 +253,7 @@ module Bump
                 end
             end
 
-            srv.saveConfig
+            repo.save srv
 
             if opts.fix?
                 puts `git add . ; git commit -m "Bump to version v#{after_version}"`
