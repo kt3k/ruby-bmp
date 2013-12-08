@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    verbump (0.1.0)
+    bmp (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -22,8 +22,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bmp!
   bundler (~> 1.3)
   rake
   rspec
   slop
-  verbump!

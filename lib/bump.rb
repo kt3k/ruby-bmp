@@ -208,7 +208,7 @@ module Bump
         end
 
         def actionVersion
-            @logger.log "bump v#{@version}"
+            @logger.log @version
         end
 
         def actionHelp
@@ -320,10 +320,12 @@ module Bump
 
         VERSION_FILE = '.version'
 
+        CLI_NAME = 'bmp'
+
         def main
 
             opts = Slop.parse do
-                banner 'Usage: bump [-p|-m|-j] [-f]'
+                banner "Usage: #{CLI_NAME} [-p|-m|-j] [-f]"
 
                 on :p, :patch, 'bump patch (0.0.1) level'
                 on :m, :minor, 'bump minor (0.1.0) level'
@@ -333,7 +335,7 @@ module Bump
                 on :v, :version, 'show version and exit'
             end
 
-            app = Application.new opts.to_hash, opts.to_s, Bump::VERSION, VERSION_FILE, Logger.new
+            app = Application.new opts.to_hash, opts.to_s, "#{CLI_NAME} v#{Bump::VERSION}", VERSION_FILE, Logger.new
 
             app.main
 
