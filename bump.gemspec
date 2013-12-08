@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'bump/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "verbump"
+  spec.name          = "bmp"
   spec.version       = Bump::VERSION
   spec.authors       = ["Yoshiya Hinosawa"]
   spec.email         = ["stibium121@gmail.com"]
