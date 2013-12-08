@@ -1,14 +1,14 @@
-# Bump v0.2.0
+# Bmp v0.2.0
 
 > Bump version info in a repository
 
 ## Installation
 
 ```sh
-gem install verbump
+gem install bmp
 ```
 
-This install `bump` command
+This install `bmp` command
 
 ## Usage
 
@@ -40,22 +40,22 @@ The expression above means the file `./gradle.properties` contains the string `v
 
 bump patch (0.0.1) level:
 ```
-bump -s
+bmp -p
 ```
 
 bump minor (0.1.0) level:
 ```
-bump -m
+bmp -m
 ```
 
 bump major (1.0.0) level:
 ```
-bump -l
+bmp -j
 ```
 
 commit diffs with bump comment:
 ```
-bump -f
+bmp -f
 ```
 
 ## Contributing
