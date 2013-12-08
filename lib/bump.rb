@@ -183,58 +183,59 @@ module Bump
 
     class Application
 
-        def initialize options, help, version, logger
+        def initialize options, help, version, file, logger
             @options = options
             @help = help
             @version = version
+            @file = file
             @logger = logger
         end
 
         def selectAction
-            if @options['help']
-                return 'help'
+            if @options[:help]
+                return :help
             end
 
-            if @options['version']
-                return 'version'
+            if @options[:version]
+                return :version
             end
 
-            if !@options['major'] && !@options['minor'] && !@options['patch'] && !@options['fix']
-                return 'help'
+            if !@options[:major] && !@options[:minor] && !@options[:patch] && !@options[:fix]
+                return :help
             end
 
-            return 'bump'
+            return :bump
         end
 
         def actionVersion
-            @logger.error @version
+            @logger.log "bump v#{@version}"
         end
 
         def actionHelp
-            @logger.error @help
+            @logger.log @help
         end
 
         def actionBump
 
-            repo = VersionDescriptorRepository.new VERSION_FILE
+            repo = VersionDescriptorRepository.new @file
 
             srv = repo.fromFile
 
-            if @options['patch']
+            if @options[:patch]
                 srv.patchBump
 
                 @logger.log 'Bump patch level'
                 @logger.log "#{srv.beforeVersion} => #{srv.afterVersion}"
             end
 
-            if @options['minor']
+            if @options[:minor]
                 srv.minorBump
 
                 @logger.log 'Bump minor level'
                 @logger.log "#{srv.beforeVersion} => #{srv.afterVersion}"
             end
 
-            if @options['major']
+            if @options[:major]
                 srv.majorBump
 
                 @logger.log 'Bump major level'
@@ -259,7 +260,7 @@ module Bump
 
             repo.save srv
 
-            if options['fix']
+            if @options[:fix]
                 @logger.log `git add . ; git commit -m "Bump to version v#{after_version}"`
             end
         end
@@ -270,14 +271,16 @@ module Bump
 
         def main
 
-            case selectAction
-            when 'version'
+            action = selectAction
+
+            case action
+            when :version
                 actionVersion
-            when 'help'
+            when :help
                 actionHelp
-            when 'bump'
+            when :bump
                 actionBump
-            when 'error'
+            when :error
                 actionError
             end
 
@@ -287,27 +290,27 @@ module Bump
 
     class Logger
 
-        def log message
+        def log message = ''
             puts message
         end
 
-        def error message
+        def error message = ''
             puts message
         end
 
-        def warn message
+        def warn message = ''
             puts message
         end
 
-        def info message
+        def info message = ''
             puts message
         end
 
-        def debug message
+        def debug message = ''
             puts message
         end
 
-        def verbose message
+        def verbose message = ''
             puts message
         end
 
@@ -327,14 +330,10 @@ module Bump
                 on :j, :major, 'bump major (1.0.0) level'
                 on :f, :fix, 'fix bumping and commit current changes (git required)'
                 on :h, :help, 'show this help and exit'
-                on :v, :version, 'show version and exit' do
-                    puts "bump v#{Bump::VERSION}"
-
-                    exit
-                end
+                on :v, :version, 'show version and exit'
             end
 
-            app = Application.new opts.to_hash, opts.to_s, Bump::VERSION, Logger.new
+            app = Application.new opts.to_hash, opts.to_s, Bump::VERSION, VERSION_FILE, Logger.new
 
             app.main
 
