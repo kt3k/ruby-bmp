@@ -181,20 +181,146 @@ module Bump
 
     end
 
+    class Application
+
+        def initialize options, help, version, logger
+            @options = options
+            @help = help
+            @version = version
+            @logger = logger
+        end
+
+        def selectAction
+            if @options['help']
+                return 'help'
+            end
+
+            if @options['version']
+                return 'version'
+            end
+
+            if !@options['major'] && !@options['minor'] && !@options['patch'] && !@options['fix']
+                return 'help'
+            end
+
+            return 'bump'
+        end
+
+        def actionVersion
+            @logger.error @version
+        end
+
+        def actionHelp
+            @logger.error @help
+        end
+
+        def actionBump
+
+            repo = VersionDescriptorRepository.new VERSION_FILE
+
+            srv = repo.fromFile
+
+            if @options['patch']
+                srv.patchBump
+
+                @logger.log 'Bump patch level'
+                @logger.log "#{srv.beforeVersion} => #{srv.afterVersion}"
+            end
+
+            if @options['minor']
+                srv.minorBump
+
+                @logger.log 'Bump minor level'
+                @logger.log "#{srv.beforeVersion} => #{srv.afterVersion}"
+            end
+
+            if @options['major']
+                srv.majorBump
+
+                @logger.log 'Bump major level'
+                @logger.log "#{srv.beforeVersion} => #{srv.afterVersion}"
+            end
+
+            @logger.log
+
+            srv.rewriteRules.each do |rule|
+                result = rule.perform
+
+                if result
+                    @logger.log "#{rule.file}"
+                    @logger.log "  Performed pattern replacement:"
+                    @logger.log "  '#{rule.beforePattern}' => '#{rule.afterPattern}'"
+                    @logger.log
+                else
+                    @logger.log "  Current version pattern ('#{rule.beforePattern}') not found!"
+                    @logger.log
+                end
+            end
+
+            repo.save srv
+
+            if options['fix']
+                @logger.log `git add . ; git commit -m "Bump to version v#{after_version}"`
+            end
+        end
+
+        def actionError
+            @logger.error @error_message
+        end
+
+        def main
+
+            case selectAction
+            when 'version'
+                actionVersion
+            when 'help'
+                actionHelp
+            when 'bump'
+                actionBump
+            when 'error'
+                actionError
+            end
+
+        end
+
+    end
+
+    class Logger
+
+        def log message
+            puts message
+        end
+
+        def error message
+            puts message
+        end
+
+        def warn message
+            puts message
+        end
+
+        def info message
+            puts message
+        end
+
+        def debug message
+            puts message
+        end
+
+        def verbose message
+            puts message
+        end
+
+    end
+
     class CLI
 
         VERSION_FILE = '.version'
 
         def main
 
-            repo = VersionDescriptorRepository.new VERSION_FILE
-
-            srv = repo.fromFile
-
-            p srv.config
-
             opts = Slop.parse do
-                banner 'Usage: bump [-p|--patch] [-m|--minor] [-j|--major] [-f|--fix]'
+                banner 'Usage: bump [-p|-m|-j] [-f]'
 
                 on :p, :patch, 'bump patch (0.0.1) level'
                 on :m, :minor, 'bump minor (0.1.0) level'
@@ -208,56 +334,9 @@ module Bump
                 end
             end
 
-            puts opts.to_hash
+            app = Application.new opts.to_hash, opts.to_s, Bump::VERSION, Logger.new
 
-            if opts.help?
-                puts opts
-
-                exit
-            end
-
-            if opts.patch?
-                srv.patchBump
-
-                puts 'Bump patch level'
-                puts "#{srv.beforeVersion} => #{srv.afterVersion}"
-            end
-
-            if opts.minor?
-                srv.minorBump
-
-                puts 'Bump minor level'
-                puts "#{srv.beforeVersion} => #{srv.afterVersion}"
-            end
-
-            if opts.major?
-                srv.majorBump
-
-                puts 'Bump major level'
-                puts "#{srv.beforeVersion} => #{srv.afterVersion}"
-            end
-
-            puts
-
-            srv.rewriteRules.each do |rule|
-                result = rule.perform
-
-                if result
-                    puts "#{rule.file}"
-                    puts "  Performed pattern replacement:"
-                    puts "  '#{rule.beforePattern}' => '#{rule.afterPattern}'"
-                    puts
-                else
-                    puts "  Current version pattern ('#{rule.beforePattern}') not found!"
-                    puts
-                end
-            end
-
-            repo.save srv
-
-            if opts.fix?
-                puts `git add . ; git commit -m "Bump to version v#{after_version}"`
-            end
+            app.main
 
         end
 
