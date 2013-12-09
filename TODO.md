@@ -1,7 +1,13 @@
 # TODO
 
-- introduce commander
 - decent console log
-  - bump description
-  - git command output
-- spec, travis, coveralls
+  - git command outputs
+- separate classes into separate files
+- spec
+- travis
+- coveralls
+
+# done
+- bump description - done
+- introduce slop - done
+- introduce commander - no
