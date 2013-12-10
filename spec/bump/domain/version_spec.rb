@@ -14,4 +14,16 @@ describe Bump::Version do
 
     end
 
+    describe "#to_s" do
+
+        it "returns version string" do
+
+            version = Bump::Version.new '1', '2', '3'
+
+            expect(version.to_s).to eq '1.2.3'
+
+        end
+
+    end
+
 end
