@@ -1,8 +1,5 @@
 # TODO
 
-- decent console log
-  - git command outputs
-- separate classes into separate files
 - test
   - Version
   - VersionFactory
@@ -12,10 +9,14 @@
   - VersionDescriptorRepository
   - Application
   - CLI
+  - Logger
 - travis
 - coveralls
 
 # done
+- separate classes into separate files - done
+- decent console log - done
+  - git command outputs
 - bump description - done
 - introduce slop - done
 - introduce commander - no
