@@ -45,15 +45,17 @@ module Bump
 
             descriptor = repo.fromFile
 
-            @logger.log "Current Version: #{descriptor.beforeVersion}"
+            @logger.log "Current Version:"
+            @logger.log descriptor.beforeVersion
 
             @logger.log
 
             descriptor.rewriteRules.each do |rule|
                 rule.prepare
 
-                @logger.log "File: #{rule.file}"
-                @logger.log "Pattern: #{rule.beforePattern}"
+                @logger.log "#{rule.file}"
+                @logger.log "  Replace Target Pattern:"
+                @logger.log "  '#{rule.beforePattern}'"
                 @logger.log
             end
         end
