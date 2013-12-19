@@ -21,6 +21,10 @@ module Bump
                 return :version
             end
 
+            if @options[:info]
+                return :info
+            end
+
             if !@options[:major] && !@options[:minor] && !@options[:patch] && !@options[:fix]
                 return :help
             end
@@ -34,6 +38,24 @@ module Bump
 
         def actionHelp
             @logger.log @help
+        end
+
+        def actionInfo
+            repo = VersionDescriptorRepository.new @file
+
+            descriptor = repo.fromFile
+
+            @logger.log "Current Version: #{descriptor.beforeVersion}"
+
+            @logger.log
+
+            descriptor.rewriteRules.each do |rule|
+                rule.prepare
+
+                @logger.log "File: #{rule.file}"
+                @logger.log "Pattern: #{rule.beforePattern}"
+                @logger.log
+            end
         end
 
         def actionBump
@@ -99,6 +121,8 @@ module Bump
                 actionVersion
             when :help
                 actionHelp
+            when :info
+                actionInfo
             when :bump
                 actionBump
             when :error

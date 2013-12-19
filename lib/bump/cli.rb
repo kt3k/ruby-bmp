@@ -16,6 +16,7 @@ module Bump
             opts = Slop.parse do
                 banner "Usage: #{CLI_NAME} [-p|-m|-j] [-f]"
 
+                on :i, :info, 'show current version info'
                 on :p, :patch, 'bump patch (0.0.1) level'
                 on :m, :minor, 'bump minor (0.1.0) level'
                 on :j, :major, 'bump major (1.0.0) level'
