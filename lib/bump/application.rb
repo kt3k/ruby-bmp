@@ -1,5 +1,7 @@
 # lib/bump/application.rb
 
+require 'bump/command'
+
 module Bump
 
     class Application
@@ -105,8 +107,12 @@ module Bump
 
             repo.save srv
 
+            comm = Command.new @logger
+
             if @options[:fix]
-                @logger.log `git add . ; git commit -m "Bump to version v#{srv.afterVersion}"`
+                comm.exec "git add ."
+                comm.exec "git commit -m 'Bump to version v#{srv.afterVersion}'"
+                comm.exec "git tag v#{srv.afterVersion}"
             end
         end
 
