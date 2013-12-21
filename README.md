@@ -1,4 +1,4 @@
-# Bmp v0.4.0
+# Bmp v0.5.0
 
 > Bump version info in a repository
 
