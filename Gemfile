@@ -8,4 +8,5 @@ gem 'rspec'
 
 group :test do
   gem 'simplecov', require: false
+  gem 'coveralls'
 end
