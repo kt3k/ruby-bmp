@@ -1,8 +1,9 @@
 # TODO
 
+- show command before execution
+- git tag when -f
+- introduce simplecov
 - test
-  - Version
-  - VersionFactory
   - FileRewriteRule
   - FileRewriteRuleFactory
   - VersionDescriptor
@@ -14,6 +15,9 @@
 - coveralls
 
 # done
+- write tests
+  - Version - done
+  - VersionFactory - done
 - separate classes into separate files - done
 - decent console log - done
   - git command outputs
