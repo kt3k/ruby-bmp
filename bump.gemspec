@@ -2,10 +2,9 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'bump/version'
-require 'bump'
 
 Gem::Specification.new do |spec|
-  spec.name          = Bump::CLI::CLI_NAME
+  spec.name          = "bmp"
   spec.version       = Bump::VERSION
   spec.authors       = ["Yoshiya Hinosawa"]
   spec.email         = ["stibium121@gmail.com"]
