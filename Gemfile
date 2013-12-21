@@ -5,3 +5,7 @@ gemspec
 
 gem 'slop'
 gem 'rspec'
+
+group :test do
+  gem 'simplecov', require: false
+end
