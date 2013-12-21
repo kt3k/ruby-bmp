@@ -1,7 +1,5 @@
 # TODO
 
-- show command before execution
-- git tag when -f
 - introduce simplecov
 - test
   - FileRewriteRule
@@ -15,6 +13,8 @@
 - coveralls
 
 # done
+- git tag when -f - done
+- show command before execution - done
 - write tests
   - Version - done
   - VersionFactory - done
