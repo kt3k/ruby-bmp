@@ -1,6 +1,7 @@
 # bump_spec.rb
 
 require 'bump'
+require 'spec_helper'
 
 describe Bump::Version do
 
