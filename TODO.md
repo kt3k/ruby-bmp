@@ -1,17 +1,18 @@
 # TODO
 
 - test
-  - FileRewriteRule
-  - FileRewriteRuleFactory
-  - VersionDescriptor
-  - VersionDescriptorRepository
+  - domain - FileRewriteRule
+  - domain - FileRewriteRuleFactory
+  - domain - VersionDescriptor
+  - domain - VersionDescriptorRepository
   - Application
   - CLI
   - Logger
-- travis
-- coveralls
+  - Command
 
 # done
+- travis - done
+- coveralls - done
 - introduce simplecov - done
 - git tag when -f - done
 - show command before execution - done
