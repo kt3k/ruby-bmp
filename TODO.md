@@ -1,6 +1,5 @@
 # TODO
 
-- introduce simplecov
 - test
   - FileRewriteRule
   - FileRewriteRuleFactory
@@ -13,6 +12,7 @@
 - coveralls
 
 # done
+- introduce simplecov - done
 - git tag when -f - done
 - show command before execution - done
 - write tests
