@@ -1,5 +1,7 @@
 # Bmp v0.5.0
 
+[![Build Status](https://travis-ci.org/kt3k/bmp.png?branch=master)](https://travis-ci.org/kt3k/bmp) [![Coverage Status](https://coveralls.io/repos/kt3k/bmp/badge.png?branch=master)](https://coveralls.io/r/kt3k/bmp?branch=master)
+
 > Bump version info in a repository
 
 ## Installation
