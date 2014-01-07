@@ -38,24 +38,33 @@ gradle.properties: version=%.%.%
 
 The expression above means the file `./gradle.properties` contains the string `version=0.1.6` (because the current version is 0.1.6) and `%.%.%` is the placeholder for current version number and will updated on version bumps.
 
-### bump command
+### bmp command
+
+show current version info:
+```
+bmp -i
+```
+
 
 bump patch (0.0.1) level:
 ```
 bmp -p
 ```
 
+
 bump minor (0.1.0) level:
 ```
 bmp -m
 ```
+
 
 bump major (1.0.0) level:
 ```
 bmp -j
 ```
 
-commit diffs with bump comment:
+
+commit bump results
 ```
 bmp -f
 ```
