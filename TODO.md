@@ -1,5 +1,10 @@
 # TODO
 
+- more exception handlings
+  - yaml parse error
+  - no `version` case
+  - no `files` case
+
 - test
   - domain - FileRewriteRule
   - domain - FileRewriteRuleFactory
