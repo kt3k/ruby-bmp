@@ -53,7 +53,7 @@ module Bump
             end
 
             @logger.log "Current Version:"
-            @logger.log descriptor.beforeVersion
+            @logger.log_green "  #{descriptor.beforeVersion}"
 
             @logger.log
 
@@ -62,7 +62,7 @@ module Bump
 
                 @logger.log "#{rule.file}"
                 @logger.log "  Replace Target Pattern:"
-                @logger.log "  '#{rule.beforePattern}'"
+                @logger.log_green "    '#{rule.beforePattern}'"
                 @logger.log
             end
         end
@@ -82,21 +82,21 @@ module Bump
                 srv.patchBump
 
                 @logger.log 'Bump patch level'
-                @logger.log "#{srv.beforeVersion} => #{srv.afterVersion}"
+                @logger.log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
             end
 
             if @options[:minor]
                 srv.minorBump
 
                 @logger.log 'Bump minor level'
-                @logger.log "#{srv.beforeVersion} => #{srv.afterVersion}"
+                @logger.log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
             end
 
             if @options[:major]
                 srv.majorBump
 
                 @logger.log 'Bump major level'
-                @logger.log "#{srv.beforeVersion} => #{srv.afterVersion}"
+                @logger.log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
             end
 
             @logger.log
@@ -107,10 +107,10 @@ module Bump
                 if result
                     @logger.log "#{rule.file}"
                     @logger.log "  Performed pattern replacement:"
-                    @logger.log "  '#{rule.beforePattern}' => '#{rule.afterPattern}'"
+                    @logger.log_green "    '#{rule.beforePattern}' => '#{rule.afterPattern}'"
                     @logger.log
                 else
-                    @logger.log "  Current version pattern ('#{rule.beforePattern}') not found!"
+                    @logger.log_red "  Current version pattern ('#{rule.beforePattern}') not found!"
                     @logger.log
                 end
             end
