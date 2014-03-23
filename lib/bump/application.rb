@@ -27,7 +27,7 @@ module Bump
                 return :info
             end
 
-            if !@options[:major] && !@options[:minor] && !@options[:patch] && !@options[:fix]
+            if !@options[:major] && !@options[:minor] && !@options[:patch] && !@options[:commit]
                 return :help
             end
 
@@ -45,7 +45,12 @@ module Bump
         def actionInfo
             repo = VersionDescriptorRepository.new @file
 
-            descriptor = repo.fromFile
+            begin
+                descriptor = repo.fromFile
+            rescue
+                puts "Error: #{@file} not found."
+                exit 1
+            end
 
             @logger.log "Current Version:"
             @logger.log descriptor.beforeVersion
@@ -66,7 +71,12 @@ module Bump
 
             repo = VersionDescriptorRepository.new @file
 
-            srv = repo.fromFile
+            begin
+                srv = repo.fromFile
+            rescue
+                puts "Error: #{@file} not found."
+                exit 1
+            end
 
             if @options[:patch]
                 srv.patchBump
@@ -109,7 +119,7 @@ module Bump
 
             comm = Command.new @logger
 
-            if @options[:fix]
+            if @options[:commit]
                 comm.exec "git add ."
                 comm.exec "git commit -m 'Bump to version v#{srv.afterVersion}'"
                 comm.exec "git tag v#{srv.afterVersion}"
