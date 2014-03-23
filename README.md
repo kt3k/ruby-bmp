@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/kt3k/bmp.png?branch=master)](https://travis-ci.org/kt3k/bmp) [![Coverage Status](https://coveralls.io/repos/kt3k/bmp/badge.png?branch=master)](https://coveralls.io/r/kt3k/bmp?branch=master)
 
-> Bump version numbers in a repository
+> Bump and update version numbers in a repository
 
-`bmp` command updates the version numbers in a repository according to the yaml file `.bmp.yml`.
+`bmp` command bumps and updates the version numbers in a repository according to the yaml file `.bmp.yml`. This is convenient if you have written many version numbers in your repository. This command helps you consistently update the version information in your repository.
 
 ## Installation
 
