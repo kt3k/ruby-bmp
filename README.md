@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/kt3k/bmp.png?branch=master)](https://travis-ci.org/kt3k/bmp) [![Coverage Status](https://coveralls.io/repos/kt3k/bmp/badge.png?branch=master)](https://coveralls.io/r/kt3k/bmp?branch=master)
 
-> Bump version info in a repository
+> Bump version numbers in a repository
+
+`bmp` command updates the version numbers in a repository according to the yaml file `.bmp.yml`.
 
 ## Installation
 
@@ -14,9 +16,9 @@ This install `bmp` command
 
 ## Usage
 
-### version descriptor
+### `.bmp.yml` version description file
 
-put `.version` file on the top of your repository like following (which is `YAML`):
+put `.bmp.yml` file on the top of your repository like following:
 
 ```
 ---
@@ -42,31 +44,31 @@ The expression above means the file `./gradle.properties` contains the string `v
 
 show current version info:
 ```
-bmp -i
+bmp --info
 ```
 
 
 bump patch (0.0.1) level:
 ```
-bmp -p
+bmp --patch
 ```
 
 
 bump minor (0.1.0) level:
 ```
-bmp -m
+bmp --minor
 ```
 
 
 bump major (1.0.0) level:
 ```
-bmp -j
+bmp --major
 ```
 
 
 commit bump results
 ```
-bmp -f
+bmp --commit
 ```
 
 ## Contributing
