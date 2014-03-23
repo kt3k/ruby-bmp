@@ -47,8 +47,8 @@ module Bump
 
             begin
                 descriptor = repo.fromFile
-            rescue
-                puts "Error: #{@file} not found."
+            rescue Errno::ENOENT => e then
+                @logger.log "Error: the file `#{@file}` not found."
                 exit 1
             end
 
@@ -73,8 +73,8 @@ module Bump
 
             begin
                 srv = repo.fromFile
-            rescue
-                puts "Error: #{@file} not found."
+            rescue Errno::ENOENT => e then
+                @logger.log "Error: the file `#{@file}` not found."
                 exit 1
             end
 
