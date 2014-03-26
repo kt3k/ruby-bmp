@@ -1,6 +1,6 @@
 # Bmp v0.7.3
 
-[![Build Status](https://travis-ci.org/kt3k/bmp.png?branch=master)](https://travis-ci.org/kt3k/bmp) [![Coverage Status](https://coveralls.io/repos/kt3k/bmp/badge.png?branch=master)](https://coveralls.io/r/kt3k/bmp?branch=master)
+[![Build Status](https://travis-ci.org/kt3k/bmp.png)](https://travis-ci.org/kt3k/bmp) [![Coverage Status](https://coveralls.io/repos/kt3k/bmp/badge.png)](https://coveralls.io/r/kt3k/bmp)
 
 > Bump and update version numbers in a repository
 
