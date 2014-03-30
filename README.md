@@ -1,6 +1,9 @@
 # Bmp v0.7.3
 
-[![Build Status](https://travis-ci.org/kt3k/bmp.png)](https://travis-ci.org/kt3k/bmp) [![Coverage Status](https://coveralls.io/repos/kt3k/bmp/badge.png)](https://coveralls.io/r/kt3k/bmp)
+[![Gem Version](https://badge.fury.io/rb/bmp.png)](http://badge.fury.io/rb/bmp)
+[![Build Status](https://travis-ci.org/kt3k/bmp.png)](https://travis-ci.org/kt3k/bmp)
+[![Coverage Status](https://coveralls.io/repos/kt3k/bmp/badge.png)](https://coveralls.io/r/kt3k/bmp)
+[![Code Climate](https://codeclimate.com/github/kt3k/bmp.png)](https://codeclimate.com/github/kt3k/bmp)
 
 > Bump and update version numbers in a repository
 
