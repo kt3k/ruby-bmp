@@ -6,36 +6,40 @@ module Bump
 
         no_color = false
 
-        def log message = ''
-            puts message
+        def log message = '', breakline = true
+            print message
+
+            if breakline
+                print "\n"
+            end
         end
 
-        def log_green message = ''
-            log green message
+        def log_green message = '', breakline = true
+            log green(message), breakline
         end
 
-        def log_red message = ''
-            log red message
+        def log_red message = '', breakline = true
+            log red(message), breakline
         end
 
-        def error message = ''
-            puts message
+        def error message = '', breakline = true
+            puts message, breakline
         end
 
-        def warn message = ''
-            puts message
+        def warn message = '', breakline = true
+            puts message, breakline
         end
 
-        def info message = ''
-            puts message
+        def info message = '', breakline = true
+            puts message, breakline
         end
 
-        def debug message = ''
-            puts message
+        def debug message = '', breakline = true
+            puts message, breakline
         end
 
-        def verbose message = ''
-            puts message
+        def verbose message = '', breakline = true
+            puts message, breakline
         end
 
         def colorize text, color_code
