@@ -5,6 +5,11 @@
   - no `version` case
   - no `files` case
 
+- feature
+  - `bumped_at` field
+  - Add `this file is auto modified by bmp command` comment
+  - `placeholder` field
+
 - test
   - domain - FileRewriteRule
   - domain - FileRewriteRuleFactory
@@ -15,7 +20,8 @@
   - Logger
   - Command
 
-# done
+# DONE
+
 - travis - done
 - coveralls - done
 - introduce simplecov - done
