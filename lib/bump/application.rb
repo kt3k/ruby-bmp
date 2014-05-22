@@ -27,11 +27,12 @@ module Bump
                 return :info
             end
 
-            if !@options[:major] && !@options[:minor] && !@options[:patch] && !@options[:commit]
-                return :help
+            if @options[:major] || @options[:minor] || @options[:patch] || @options[:commit]
+                return :bump
             end
 
-            return :bump
+            # command without options invokes info action
+            return :info
         end
 
         def actionVersion
