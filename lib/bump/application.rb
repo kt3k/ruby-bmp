@@ -53,14 +53,15 @@ module Bump
                 exit 1
             end
 
-            @logger.log "Current Version:", false
-            @logger.log_green "#{descriptor.beforeVersion}"
+            @logger.log "Current Version is:", false
+            @logger.log_green " #{descriptor.beforeVersion}"
+
+            @logger.log "Replacement target patterns are:"
 
             descriptor.rewriteRules.each do |rule|
                 rule.prepare
 
-                @logger.log "#{rule.file}:"
-                @logger.log "- target pattern:", false
+                @logger.log "  #{rule.file}:", false
                 @logger.log_green " '#{rule.beforePattern}'"
             end
         end
