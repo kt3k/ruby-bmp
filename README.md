@@ -47,39 +47,36 @@ The expression above means the file `./gradle.properties` contains the string `v
 
 ### bmp command
 
-show current version info:
+Show current version info:
 ```
-bmp --info
+bmp [-i|--info]
 ```
 
 
 bump patch (0.0.1) level:
 ```
-bmp --patch
+bmp -p|--patch
 ```
+
+This command updates all the version numbers which are specified in `.bmp.yml`
 
 
 bump minor (0.1.0) level:
 ```
-bmp --minor
+bmp -m|--minor
 ```
 
 
 bump major (1.0.0) level:
 ```
-bmp --major
+bmp -j|--major
 ```
 
 
 commit bump results
 ```
-bmp --commit
+bmp -c|--commit
 ```
 
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+`bmp -c` commits all the changes now the repository has. Be careful.
+And this command also tag it as `vX.Y.Z`.
