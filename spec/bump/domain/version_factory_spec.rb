@@ -28,6 +28,12 @@ describe Bump::VersionFactory do
 
             expect(version.to_s).to eq "2.0.0rc1"
 
+            version = Bump::VersionFactory.fromString "1.2.100abc"
+
+            version.patchBump
+
+            expect(version.to_s).to eq "1.2.101"
+
         end
 
     end

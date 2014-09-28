@@ -4,7 +4,7 @@ module Bump
 
     class VersionFactory
 
-        VERSION_REGEXP = /^(\d).(\d).(\d)(\S*)$/
+        VERSION_REGEXP = /^(\d+).(\d+).(\d+)(\S*)$/
 
         def self.fromString version_string
             match = VERSION_REGEXP.match version_string
