@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Yoshiya Hinosawa"]
   spec.email         = ["stibium121@gmail.com"]
   spec.description   = "Bump version numbers in a repository"
-  spec.summary       = "Bump version numbers in a repository"
+  spec.summary       = "No hassle on bumping"
   spec.homepage      = "https://github.com/kt3k/bump"
   spec.license       = "MIT License"
 

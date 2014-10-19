@@ -7,7 +7,7 @@
 
 [ ![Codeship Status for kt3k/bmp](https://www.codeship.io/projects/fc1c56c0-fa28-0131-0224-76431a64aeb5/status)](https://www.codeship.io/projects/29009)
 
-> Bump and update version numbers in a repository
+> No hassle on bumping
 
 `bmp` command bumps and updates the version numbers in a repository according to the yaml file `.bmp.yml`. This is convenient if you have written many version numbers in your repository. This command helps you consistently update the version information in your repository.
 
