@@ -5,16 +5,6 @@ require 'spec_helper'
 
 describe Bump::Version do
 
-    describe "#initialize" do
-
-        it "constructs" do
-
-            expect(Bump::Version.new(1, 2, 3)).not_to be_nil
-
-        end
-
-    end
-
     describe "#to_s" do
 
         it "returns version string" do
@@ -42,6 +32,16 @@ describe Bump::Version do
             version.patchBump
 
             expect(version.to_s).to eq '1.2.4'
+
+        end
+
+        it "bumps 0.1.10 to 0.1.11" do
+
+            version = Bump::Version.new 0, 1, 10
+
+            version.patchBump
+
+            expect(version.to_s).to eq '0.1.11'
 
         end
 
