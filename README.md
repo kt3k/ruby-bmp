@@ -1,4 +1,4 @@
-# Bmp v0.8.2
+# Bmp v0.8.3
 
 [![Gem Version](https://badge.fury.io/rb/bmp.png)](http://badge.fury.io/rb/bmp)
 [![Build Status](https://travis-ci.org/kt3k/bmp.png)](https://travis-ci.org/kt3k/bmp)
