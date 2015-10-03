@@ -6,9 +6,10 @@
   - no `files` case
 
 - feature
-  - `bumped_at` field
   - Add `this file is auto modified by bmp command` comment
   - `placeholder` field
+  - interactive init command
+  - label
 
 - test
   - domain - FileRewriteRule
