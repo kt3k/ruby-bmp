@@ -53,7 +53,7 @@ module Bump
                 exit 1
             end
 
-            @logger.log "Current Version is:", false
+            log "Current Version is:", false
             log_green " #{descriptor.beforeVersion}"
 
             log "Replacement target patterns are:"
@@ -61,7 +61,7 @@ module Bump
             descriptor.rewriteRules.each do |rule|
                 rule.prepare
 
-                @logger.log "  #{rule.file}:", false
+                log "  #{rule.file}:", false
                 log_green " '#{rule.beforePattern}'"
             end
         end
@@ -130,7 +130,7 @@ module Bump
         end
 
         def actionError
-            @logger.error @error_message
+            log_red @error_message
         end
 
         def main
@@ -152,21 +152,21 @@ module Bump
 
         end
 
-        def log message
+        def log message, newline = true
 
-            @logger.log message
-
-        end
-
-        def log_red message
-
-            @logger.log_red message
+            @logger.log message, newline
 
         end
 
-        def log_green message
+        def log_red message, newline = true
 
-            @logger.log_green message
+            @logger.log_red message, newline
+
+        end
+
+        def log_green message, newline = true
+
+            @logger.log_green message, newline
 
         end
 
