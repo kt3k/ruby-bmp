@@ -12,15 +12,15 @@ describe Bump::VersionNumberFactory do
 
             expect(version.to_s).to eq "1.2.3-a"
 
-            version.patchBump
+            version.bump :patch
 
             expect(version.to_s).to eq "1.2.4"
 
-            version.minorBump
+            version.bump :minor
 
             expect(version.to_s).to eq "1.3.0"
 
-            version.majorBump
+            version.bump :major
 
             expect(version.to_s).to eq "2.0.0"
 
@@ -30,7 +30,7 @@ describe Bump::VersionNumberFactory do
 
             version = Bump::VersionNumberFactory.fromString "1.2.100-abc"
 
-            version.patchBump
+            version.bump :patch
 
             expect(version.to_s).to eq "1.2.101"
 

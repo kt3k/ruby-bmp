@@ -23,13 +23,13 @@ describe Bump::VersionNumber do
 
     end
 
-    describe "#patchBump" do
+    describe "#bump :patch" do
 
         it "bumps patch level" do
 
             version = Bump::VersionNumber.new 1, 2, 3
 
-            version.patchBump
+            version.bump :patch
 
             expect(version.to_s).to eq '1.2.4'
 
@@ -39,7 +39,7 @@ describe Bump::VersionNumber do
 
             version = Bump::VersionNumber.new 0, 1, 10
 
-            version.patchBump
+            version.bump :patch
 
             expect(version.to_s).to eq '0.1.11'
 
@@ -49,7 +49,7 @@ describe Bump::VersionNumber do
 
             version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
-            version.patchBump
+            version.bump :patch
 
             expect(version.to_s).to eq '1.2.4'
 
@@ -57,13 +57,13 @@ describe Bump::VersionNumber do
 
     end
 
-    describe "#minorBump" do
+    describe "#bump :minor" do
 
         it "bumps patch level" do
 
             version = Bump::VersionNumber.new 1, 2, 3
 
-            version.minorBump
+            version.bump :minor
 
             expect(version.to_s).to eq '1.3.0'
 
@@ -73,7 +73,7 @@ describe Bump::VersionNumber do
 
             version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
-            version.minorBump
+            version.bump :minor
 
             expect(version.to_s).to eq '1.3.0'
 
@@ -81,13 +81,13 @@ describe Bump::VersionNumber do
 
     end
 
-    describe "#majorBump" do
+    describe "#bump :major" do
 
         it "bumps patch level" do
 
             version = Bump::VersionNumber.new 1, 2, 3
 
-            version.majorBump
+            version.bump :major
 
             expect(version.to_s).to eq '2.0.0'
 
@@ -97,7 +97,7 @@ describe Bump::VersionNumber do
 
             version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
-            version.majorBump
+            version.bump :major
 
             expect(version.to_s).to eq '2.0.0'
 
