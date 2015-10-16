@@ -1,8 +1,7 @@
 # TODO
 
-- Generate documentaion
+- gh-pages yardoc
 - support pre-release version number (of semver)
-- support build version number (of semver)
 
 - yaml parse error handling
 - no `version` case handling
@@ -21,7 +20,8 @@
 - test Command
 
 # DONE
-
+- support build version number (of semver) - pending
+- Generate documentaion
 - Rename file_rewrite_rule to file_update_rule
 - Rename version_descriptor to bump_info
 - Refactor application
