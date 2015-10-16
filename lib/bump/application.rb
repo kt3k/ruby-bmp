@@ -111,6 +111,8 @@ module Bump
                 else
                     @logger.log_red "  Current version pattern ('#{rule.beforePattern}') not found!"
                     @logger.log
+
+                    exit 1
                 end
             end
 
