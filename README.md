@@ -1,11 +1,9 @@
 # Bmp v0.9.0
 
-[![Gem Version](https://badge.fury.io/rb/bmp.png)](http://badge.fury.io/rb/bmp)
-[![Build Status](https://travis-ci.org/kt3k/bmp.png)](https://travis-ci.org/kt3k/bmp)
-[![Coverage Status](https://coveralls.io/repos/kt3k/bmp/badge.png)](https://coveralls.io/r/kt3k/bmp)
-[![Code Climate](https://codeclimate.com/github/kt3k/bmp.png)](https://codeclimate.com/github/kt3k/bmp)
-
-[ ![Codeship Status for kt3k/bmp](https://www.codeship.io/projects/fc1c56c0-fa28-0131-0224-76431a64aeb5/status)](https://www.codeship.io/projects/29009)
+[![Gem Version](https://img.shields.io/gem/v/bmp.svg)](http://badge.fury.io/rb/bmp)
+[![Build Status](https://img.shields.io/travis/kt3k/bmp.svg)](https://travis-ci.org/kt3k/bmp)
+[![Coverage Status](https://img.shields.io/coveralls/kt3k/bmp.svg)](https://coveralls.io/r/kt3k/bmp)
+[![Code Climate](https://img.shields.io/codeclimate/github/kt3k/bmp.svg)](https://codeclimate.com/github/kt3k/bmp)
 
 > No hassle on bumping
 
