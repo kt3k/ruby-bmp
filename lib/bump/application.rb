@@ -126,6 +126,40 @@ module Bump
 
         end
 
+
+        # Checks the bumping is possible.
+        #
+        # @param [Bump::BumpInfo] bumpInfo
+        # @return [void]
+        def checkBumpInfo bumpInfo
+
+            if not bumpInfo.check
+                log_red "Some patterns are invalid!"
+                log_red "Stops updating version numbers."
+                log
+
+                showVersionPatterns bumpInfo
+
+                exit 1
+            end
+
+        end
+
+        # Reports the bumping details.
+        #
+        # @param [Bump::BumpInfo] bumpInfo
+        # @return [void]
+        def report bumpInfo
+            bumpInfo.updateRules.each do |rule|
+
+                log "#{rule.file}"
+                log "  Performed pattern replacement:"
+                log_green "    '#{rule.beforePattern}' => '#{rule.afterPattern}'"
+                log
+
+            end
+        end
+
         # handler of `bmp --patch|--minor|--major|--commit`
         #
         # @return [void]
@@ -144,26 +178,11 @@ module Bump
 
             log
 
-            if not bumpInfo.check
-                log_red "Some patterns are invalid!"
-                log_red "Stops updating version numbers."
-                log
-
-                showVersionPatterns bumpInfo
-
-                exit 1
-            end
+            checkBumpInfo bumpInfo
 
             bumpInfo.performUpdate
 
-            bumpInfo.updateRules.each do |rule|
-
-                log "#{rule.file}"
-                log "  Performed pattern replacement:"
-                log_green "    '#{rule.beforePattern}' => '#{rule.afterPattern}'"
-                log
-
-            end
+            report bumpInfo
 
             saveBumpInfo bumpInfo
 
