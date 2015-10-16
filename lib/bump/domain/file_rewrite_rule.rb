@@ -11,9 +11,6 @@ module Bump
             @pattern = pattern || PLACEHOLDER_PATTERN # default pattern is '%.%.%'
             @before_version = before_version
             @after_version = after_version
-        end
-
-        def prepare
             @before_pattern = @pattern.sub PLACEHOLDER_PATTERN, @before_version
             @after_pattern = @pattern.sub PLACEHOLDER_PATTERN, @after_version
         end
@@ -31,8 +28,6 @@ module Bump
         end
 
         def perform
-            prepare
-
             contents = File.read @file, :encoding => Encoding::UTF_8
 
             if contents.index @before_pattern

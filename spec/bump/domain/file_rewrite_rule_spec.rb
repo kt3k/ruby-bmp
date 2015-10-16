@@ -19,8 +19,6 @@ describe Bump::FileRewriteRule do
         it 'returns before_pattern property' do
             rule = Bump::FileRewriteRule.new 'abc', 'v%.%.%', '0.0.1', '1.0.0'
 
-            rule.prepare
-
             expect(rule.beforePattern).to eq 'v0.0.1'
         end
 
@@ -30,8 +28,6 @@ describe Bump::FileRewriteRule do
 
         it 'returns before_pattern property' do
             rule = Bump::FileRewriteRule.new 'abc', 'v%.%.%', '0.0.1', '1.0.0'
-
-            rule.prepare
 
             expect(rule.afterPattern).to eq 'v1.0.0'
         end
