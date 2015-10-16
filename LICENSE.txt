@@ -1,4 +1,4 @@
-Copyright (c) 2013 Yoshiya Hinosawa
+Copyright (c) 2015 Yoshiya Hinosawa
 
 MIT License
 

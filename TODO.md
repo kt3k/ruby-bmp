@@ -1,5 +1,10 @@
 # TODO
 
+- Rename file_rewrite_rule to file_update_rule
+- Rename version_descriptor to bump_info
+
+- Refactor application
+
 - more exception handlings
   - yaml parse error
   - no `version` case
