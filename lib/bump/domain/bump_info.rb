@@ -31,27 +31,12 @@ module Bump
             @files
         end
 
-        # Performs major version up
+        # Performs bumping version
         #
+        # @param [Symbol] level
         # @return [void]
-        def majorBump
-            @version.bump 'major'
-            @after_version = @version.to_s
-        end
-
-        # Performs minor version up
-        #
-        # @return [void]
-        def minorBump
-            @version.bump 'minor'
-            @after_version = @version.to_s
-        end
-
-        # Performs patch version up
-        #
-        # @return [void]
-        def patchBump
-            @version.bump 'patch'
+        def bump level
+            @version.bump level
             @after_version = @version.to_s
         end
 

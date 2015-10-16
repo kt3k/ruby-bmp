@@ -133,25 +133,13 @@ module Bump
 
             bumpInfo = getBumpInfo
 
-            if @options[:patch]
-                bumpInfo.patchBump
-
-                log 'Bump patch level'
-                log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
-            end
-
-            if @options[:minor]
-                bumpInfo.minorBump
-
-                log 'Bump minor level'
-                log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
-            end
-
-            if @options[:major]
-                bumpInfo.majorBump
-
-                log 'Bump major level'
-                log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
+            [:major, :minor, :patch].each do |level|
+                if @options[level]
+                    bumpInfo.bump level
+                    log "Bump #{level} level"
+                    log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
+                    break
+                end
             end
 
             log
