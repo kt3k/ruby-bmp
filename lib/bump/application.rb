@@ -36,7 +36,7 @@ module Bump
                 return :info
             end
 
-            if @options[:major] || @options[:minor] || @options[:patch] || @options[:commit] || @options[:preid]
+            if @options[:major] || @options[:minor] || @options[:patch] || @options[:commit] || @options[:preid] || @options[:release]
                 return :bump
             end
 
@@ -181,6 +181,12 @@ module Bump
                 bumpInfo.setPreid preid
                 log "Set pre-release version id: ", false
                 log_green preid
+                log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
+            end
+
+            if @options[:release]
+                bumpInfo.setPreid nil
+                log "Remove pre-release version id"
                 log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
             end
 

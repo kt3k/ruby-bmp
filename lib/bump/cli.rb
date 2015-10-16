@@ -28,8 +28,9 @@ module Bump
                 o.bool '-j', '--major', 'bump major (1.0.0) level'
                 o.bool '-c', '--commit', 'commit bump changes (git required)'
                 o.bool '-h', '--help', 'show this help and exit'
-                o.bool '-v', '--version', 'show version and exit'
-                o.string '-s', '--preid', 'set pre release version id (e.g. alpha, beta.1)'
+                o.bool '-v', '--version', 'show the version of this command and exit'
+                o.bool '-r', '--release', 'remove the pre-release version id'
+                o.string '-s', '--preid', 'set the pre-release version id (e.g. alpha, beta.1)'
             end
 
             app = Application.new opts.to_hash, opts.to_s, "#{CLI_NAME} v#{Bump::VERSION}", VERSION_FILE, Logger.new
