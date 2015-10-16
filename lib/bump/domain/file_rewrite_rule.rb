@@ -6,6 +6,10 @@ module Bump
 
         PLACEHOLDER_PATTERN = '%.%.%'
 
+        # @param [String] file
+        # @param [String] pattern
+        # @param [Bump::Version] before_version
+        # @param [Bump::Version] after_version
         def initialize(file, pattern, before_version, after_version)
             @file = file
             @pattern = pattern || PLACEHOLDER_PATTERN # default pattern is '%.%.%'
@@ -27,15 +31,33 @@ module Bump
             @after_pattern
         end
 
+        def fileGetContents
+            File.read @file, :encoding => Encoding::UTF_8
+        end
+
+        # Checks if the pattern found in the file
+        #
+        # @return [Boolean]
+        def patternExists
+            fileGetContents.index @before_pattern
+        end
+
+        # Performs file update
+        #
+        # @return [Boolean]
         def perform
-            contents = File.read @file, :encoding => Encoding::UTF_8
+            contents = fileGetContents
 
             if contents.index @before_pattern
+
                 File.write @file, contents.sub(@before_pattern, @after_pattern)
 
                 return true
+
             else
+
                 return false
+
             end
         end
 

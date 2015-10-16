@@ -34,4 +34,14 @@ describe Bump::FileRewriteRule do
 
     end
 
+    describe '#patternExists' do
+
+        it 'checks if the given pattern found in the file' do
+
+            rule = Bump::FileRewriteRule.new 'abc', 'v%.%.%', '0.0.1', '1.0.0'
+
+        end
+
+    end
+
 end
