@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bmp (0.8.3)
+    bmp (0.8.4)
       slop (~> 3.4.7)
 
 GEM
