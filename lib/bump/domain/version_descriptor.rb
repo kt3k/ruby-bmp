@@ -47,15 +47,56 @@ module Bump
         end
 
         def rewriteRules
-            return @config['files'].map { |file, param|
-                FileRewriteRuleFactory.create(file, param, @before_version, @after_version)
+            createUpdateRules
+        end
+
+        # Creates file update rules according to the current settings.
+        #
+        # @return [Bump::FileRewriteRule[]]
+        def createUpdateRules
+            @config['files'].map { |file, pattern|
+                FileRewriteRuleFactory.create(file, pattern, @before_version, @after_version)
             }.flatten
         end
 
+        # Performs all updates.
+        def performUpdate
+
+            createUpdateRules.each do |rule|
+
+                rule.perform
+
+            end
+
+        end
+
+        # Checks the all the version patterns are available
+        #
+        # @return [Boolean]
+        def check
+
+            createUpdateRules.each do |rule|
+
+                if not rule.patternExists
+                    return false
+                end
+
+            end
+
+            return true
+
+        end
+
+        # Returns the version number after the bumping.
+        #
+        # @return [String]
         def afterVersion
             @after_version
         end
 
+        # Returns the version number before the bumping.
+        #
+        # @return [String]
         def beforeVersion
             @before_version
         end

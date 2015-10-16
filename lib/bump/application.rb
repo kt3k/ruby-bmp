@@ -6,6 +6,11 @@ module Bump
 
     class Application
 
+        # @param [Hash] options The cli options
+        # @param [String] help The help message
+        # @param [String] version The version expression of this command
+        # @param [String] file The file name of bump info file
+        # @param [Bump::Logger] logger The logger
         def initialize options, help, version, file, logger
             @options = options
             @help = help
@@ -14,6 +19,9 @@ module Bump
             @logger = logger
         end
 
+        # Select the main action
+        #
+        # @retrun [Symbol]
         def selectAction
             if @options[:help]
                 return :help
@@ -35,30 +43,54 @@ module Bump
             return :info
         end
 
+        # handler of `bmp --version`
         def actionVersion
             log @version
         end
 
+        # handler of `bmp --help`
         def actionHelp
             log @help
         end
 
-        def actionInfo
+        # Gets the bump info
+        #
+        # @return [Bump::VersionDescriptor]
+        def getBumpInfo
+
             repo = VersionDescriptorRepository.new @file
 
             begin
-                descriptor = repo.fromFile
+                bumpInfo = repo.fromFile
             rescue Errno::ENOENT => e then
                 log_red "Error: the file `#{@file}` not found."
                 exit 1
             end
 
+            return bumpInfo
+
+        end
+
+        # Saves the bump info
+        #
+        # @param [Bump::VersionDescriptor]
+        def saveBumpInfo bumpInfo
+            repo = VersionDescriptorRepository.new @file
+
+            repo.save bumpInfo
+        end
+
+        # Shows the version patterns.
+        #
+        # @param [Bump::VersionDescriptor]
+        def showVersionPatterns bumpInfo
+
             log "Current Version:", false
-            log_green " #{descriptor.beforeVersion}"
+            log_green " #{bumpInfo.beforeVersion}"
 
             log "Version patterns:"
 
-            descriptor.rewriteRules.each do |rule|
+            bumpInfo.rewriteRules.each do |rule|
                 log "  #{rule.file}:", false
 
                 if rule.patternExists
@@ -67,71 +99,85 @@ module Bump
                     log_red " '#{rule.beforePattern}' (pattern not found)"
                 end
             end
+
         end
 
-        def actionBump
+        # handler of `bmp [--info]`
+        def actionInfo
 
-            repo = VersionDescriptorRepository.new @file
+            bumpInfo = getBumpInfo
 
-            begin
-                srv = repo.fromFile
-            rescue Errno::ENOENT => e then
+            showVersionPatterns bumpInfo
 
-                log_red "Error: the file `#{@file}` not found."
-
+            if bumpInfo.check
+                exit 0
+            else
                 exit 1
             end
 
+        end
+
+        # handler of `bmp --patch|--minor|--major|--commit`
+        def actionBump
+
+            bumpInfo = getBumpInfo
+
             if @options[:patch]
-                srv.patchBump
+                bumpInfo.patchBump
 
                 log 'Bump patch level'
-                log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
+                log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
             end
 
             if @options[:minor]
-                srv.minorBump
+                bumpInfo.minorBump
 
                 log 'Bump minor level'
-                log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
+                log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
             end
 
             if @options[:major]
-                srv.majorBump
+                bumpInfo.majorBump
 
                 log 'Bump major level'
-                log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
+                log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
             end
 
             log
 
-            srv.rewriteRules.each do |rule|
-                result = rule.perform
+            if not bumpInfo.check
+                log_red "Some patterns are invalid!"
+                log_red "Stops updating version numbers."
+                log
 
-                if result
-                    log "#{rule.file}"
-                    log "  Performed pattern replacement:"
-                    log_green "    '#{rule.beforePattern}' => '#{rule.afterPattern}'"
-                    log
-                else
-                    log_red "  Current version pattern ('#{rule.beforePattern}') not found!"
-                    log
+                showVersionPatterns bumpInfo
 
-                    exit 1
-                end
+                exit 1
             end
 
-            repo.save srv
+            bumpInfo.performUpdate
+
+            bumpInfo.rewriteRules.each do |rule|
+
+                log "#{rule.file}"
+                log "  Performed pattern replacement:"
+                log_green "    '#{rule.beforePattern}' => '#{rule.afterPattern}'"
+                log
+
+            end
+
+            saveBumpInfo bumpInfo
 
             comm = Command.new @logger
 
             if @options[:commit]
                 comm.exec "git add ."
-                comm.exec "git commit -m 'Bump to version v#{srv.afterVersion}'"
-                comm.exec "git tag v#{srv.afterVersion}"
+                comm.exec "git commit -m 'Bump to version v#{bumpInfo.afterVersion}'"
+                comm.exec "git tag v#{bumpInfo.afterVersion}"
             end
         end
 
+        # The entry point
         def main
 
             action = selectAction
@@ -149,18 +195,30 @@ module Bump
 
         end
 
-        def log message, newline = true
+        # Logs the message
+        #
+        # @param [String] message
+        # @param [Boolean] newline
+        def log message = '', newline = true
 
             @logger.log message, newline
 
         end
 
+        # Logs the message in red
+        #
+        # @param [String] message
+        # @param [Boolean] newline
         def log_red message, newline = true
 
             @logger.log_red message, newline
 
         end
 
+        # Logs the message in green
+        #
+        # @param [String] message
+        # @param [Boolean] newline
         def log_green message, newline = true
 
             @logger.log_green message, newline
