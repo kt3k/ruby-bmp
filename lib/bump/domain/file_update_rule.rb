@@ -8,8 +8,8 @@ module Bump
 
         # @param [String] file
         # @param [String] pattern
-        # @param [Bump::Version] before_version
-        # @param [Bump::Version] after_version
+        # @param [Bump::VersionNumber] before_version
+        # @param [Bump::VersionNumber] after_version
         def initialize(file, pattern, before_version, after_version)
             @file = file
             @pattern = pattern || PLACEHOLDER_PATTERN # default pattern is '%.%.%'
