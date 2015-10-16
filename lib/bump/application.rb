@@ -4,6 +4,7 @@ require 'bump/command'
 
 module Bump
 
+    # The application
     class Application
 
         # @param [Hash] options The cli options
@@ -19,7 +20,7 @@ module Bump
             @logger = logger
         end
 
-        # Select the main action
+        # Returns a symbol which represents the action to perform.
         #
         # @return [Symbol]
         def selectAction
@@ -44,11 +45,15 @@ module Bump
         end
 
         # handler of `bmp --version`
+        #
+        # @return [void]
         def actionVersion
             log @version
         end
 
         # handler of `bmp --help`
+        #
+        # @return [void]
         def actionHelp
             log @help
         end
@@ -74,6 +79,7 @@ module Bump
         # Saves the bump info
         #
         # @param [Bump::BumpInfo] bumpInfo
+        # @return [void]
         def saveBumpInfo bumpInfo
             repo = BumpInfoRepository.new @file
 
@@ -83,6 +89,7 @@ module Bump
         # Shows the version patterns.
         #
         # @param [Bump::BumpInfo] bumpInfo
+        # @return [void]
         def showVersionPatterns bumpInfo
 
             log "Current Version:", false
@@ -103,6 +110,8 @@ module Bump
         end
 
         # handler of `bmp [--info]`
+        #
+        # @return [void]
         def actionInfo
 
             bumpInfo = getBumpInfo
@@ -118,6 +127,8 @@ module Bump
         end
 
         # handler of `bmp --patch|--minor|--major|--commit`
+        #
+        # @return [void]
         def actionBump
 
             bumpInfo = getBumpInfo
@@ -178,6 +189,8 @@ module Bump
         end
 
         # The entry point
+        #
+        # @return [void]
         def main
 
             action = selectAction
@@ -199,6 +212,7 @@ module Bump
         #
         # @param [String] message
         # @param [Boolean] newline
+        # @return [void]
         def log message = '', newline = true
 
             @logger.log message, newline
@@ -209,6 +223,7 @@ module Bump
         #
         # @param [String] message
         # @param [Boolean] newline
+        # @return [void]
         def log_red message, newline = true
 
             @logger.log_red message, newline
@@ -219,6 +234,7 @@ module Bump
         #
         # @param [String] message
         # @param [Boolean] newline
+        # @return [void]
         def log_green message, newline = true
 
             @logger.log_green message, newline

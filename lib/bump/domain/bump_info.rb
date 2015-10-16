@@ -3,6 +3,7 @@ require 'yaml'
 
 module Bump
 
+    # The bump information model
     class BumpInfo
 
         # @param [Bump::VersionNumber] version
@@ -16,36 +17,54 @@ module Bump
 
         end
 
+        # Returns the version number object
+        #
+        # @return [Bump::VersionNumber]
         def version
             @version
         end
 
+        # Returns files setting list
+        #
+        # @return [Array]
         def files
             @files
         end
 
+        # Performs major version up
+        #
+        # @return [void]
         def majorBump
             @version.bump 'major'
             @after_version = @version.to_s
         end
 
+        # Performs minor version up
+        #
+        # @return [void]
         def minorBump
             @version.bump 'minor'
             @after_version = @version.to_s
         end
 
+        # Performs patch version up
+        #
+        # @return [void]
         def patchBump
             @version.bump 'patch'
             @after_version = @version.to_s
         end
 
+        # Gets the file update rules
+        #
+        # @return [Array<Bump::FileUpdateRules>]
         def updateRules
             createUpdateRules
         end
 
         # Creates file update rules according to the current settings.
         #
-        # @return [Bump::FileUpdateRule[]]
+        # @return [Array<Bump::FileUpdateRule>]
         def createUpdateRules
             @files.map { |file, pattern|
                 FileUpdateRuleFactory.create(file, pattern, @before_version, @after_version)
@@ -53,6 +72,8 @@ module Bump
         end
 
         # Performs all updates.
+        #
+        # @return [void]
         def performUpdate
 
             createUpdateRules.each do |rule|

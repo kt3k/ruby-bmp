@@ -5,12 +5,16 @@ require 'slop'
 
 module Bump
 
+    # The command line interface
     class CLI
 
         VERSION_FILE = '.bmp.yml'
 
         CLI_NAME = 'bmp'
 
+        # The main routine
+        #
+        # @return [void]
         def main
 
             opts = Slop.parse do

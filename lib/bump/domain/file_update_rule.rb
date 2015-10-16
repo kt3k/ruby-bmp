@@ -2,6 +2,9 @@
 
 module Bump
 
+    # The file update rule model
+    #
+    # is able to perform actual file update
     class FileUpdateRule
 
         PLACEHOLDER_PATTERN = '%.%.%'
@@ -19,18 +22,30 @@ module Bump
             @after_pattern = @pattern.sub PLACEHOLDER_PATTERN, @after_version
         end
 
+        # Gets the file name
+        #
+        # @return [String]
         def file
             @file
         end
 
+        # Gets the version string before bumping
+        #
+        # @return [String]
         def beforePattern
             @before_pattern
         end
 
+        # Gets the version string after bumping
+        #
+        # @return [String]
         def afterPattern
             @after_pattern
         end
 
+        # Gets the contents of the file
+        #
+        # @return [String]
         def fileGetContents
             File.read @file, :encoding => Encoding::UTF_8
         end
@@ -44,21 +59,9 @@ module Bump
 
         # Performs file update
         #
-        # @return [Boolean]
+        # @return [void]
         def perform
-            contents = fileGetContents
-
-            if contents.index @before_pattern
-
-                File.write @file, contents.sub(@before_pattern, @after_pattern)
-
-                return true
-
-            else
-
-                return false
-
-            end
+            File.write @file, fileGetContents.sub(@before_pattern, @after_pattern)
         end
 
     end

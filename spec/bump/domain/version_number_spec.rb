@@ -17,7 +17,7 @@ describe Bump::VersionNumber do
             # with a suffix
             version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
-            expect(version.to_s).to eq '1.2.3rc1'
+            expect(version.to_s).to eq '1.2.3-rc1'
 
         end
 
@@ -105,25 +105,25 @@ describe Bump::VersionNumber do
 
     end
 
-    describe "#append" do
+    describe "#setPreid" do
 
-        it "appends a suffix" do
+        it "sets the preid" do
 
             version = Bump::VersionNumber.new 1, 2, 3
 
-            version.append 'rc1'
+            version.setPreid 'rc1'
 
-            expect(version.to_s).to eq '1.2.3rc1'
+            expect(version.to_s).to eq '1.2.3-rc1'
 
         end
 
-        it "rewrite the suffix if it is already set" do
+        it "rewrite the preid if it is already set" do
 
             version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
-            version.append 'rc2'
+            version.setPreid 'rc2'
 
-            expect(version.to_s).to eq '1.2.3rc2'
+            expect(version.to_s).to eq '1.2.3-rc2'
 
         end
 

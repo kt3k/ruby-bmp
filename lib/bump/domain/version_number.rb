@@ -2,52 +2,66 @@
 
 module Bump
 
+    # The version number model
     class VersionNumber
 
-        def initialize major, minor, patch, suffix = ''
+        # @param [Integer] major
+        # @param [Integer] minor
+        # @param [Integer] patch
+        # @param [String, nil] preid
+        def initialize major, minor, patch, preid = nil
             @major = major
             @minor = minor
             @patch = patch
-            @suffix = suffix
+            @preid = preid
         end
 
+        # @param [Symbol] level
         def bump level
 
             case level
-            when 'major'
+            when :major
                 @major += 1
                 @minor = 0
                 @patch = 0
-                @suffix = ''
-            when 'minor'
+            when :minor
                 @minor += 1
                 @patch = 0
-                @suffix = ''
-            when 'patch'
+            when :patch
                 @patch += 1
-                @suffix = ''
             end
+            @preid = nil
 
         end
 
         def patchBump
-            bump 'patch'
+            bump :patch
         end
 
         def minorBump
-            bump 'minor'
+            bump :minor
         end
 
         def majorBump
-            bump 'major'
+            bump :major
         end
 
-        def append suffix
-            @suffix = suffix
+        def setPreid preid
+            @preid = preid
         end
 
+        # Returns the string representation of the version
+        #
+        # @return [String]
         def to_s
-            @major.to_s + '.' + @minor.to_s + '.' + @patch.to_s + @suffix
+            label = @major.to_s + '.' + @minor.to_s + '.' + @patch.to_s
+
+            if @preid
+                label = label + '-' + @preid
+            end
+
+            label
+
         end
 
     end

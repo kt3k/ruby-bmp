@@ -2,6 +2,7 @@
 
 module Bump
 
+    # The factory class for the file update rule model
     class FileUpdateRuleFactory
 
         # Creates the file update rule from the given params.
@@ -10,6 +11,7 @@ module Bump
         # @param [String|Array] param The version update info
         # @param [String] before_version
         # @param [String] after_version
+        # @return [Bump::FileUpdateRule, Array<Bump::FileUpdateRule>]
         def self.create file, param, before_version, after_version
 
             case param

@@ -8,9 +8,9 @@ describe Bump::VersionNumberFactory do
 
         it "creates version object from version string" do
 
-            version = Bump::VersionNumberFactory.fromString "1.2.3a"
+            version = Bump::VersionNumberFactory.fromString "1.2.3-a"
 
-            expect(version.to_s).to eq "1.2.3a"
+            expect(version.to_s).to eq "1.2.3-a"
 
             version.patchBump
 
@@ -24,11 +24,11 @@ describe Bump::VersionNumberFactory do
 
             expect(version.to_s).to eq "2.0.0"
 
-            version.append 'rc1'
+            version.setPreid 'rc1'
 
-            expect(version.to_s).to eq "2.0.0rc1"
+            expect(version.to_s).to eq "2.0.0-rc1"
 
-            version = Bump::VersionNumberFactory.fromString "1.2.100abc"
+            version = Bump::VersionNumberFactory.fromString "1.2.100-abc"
 
             version.patchBump
 

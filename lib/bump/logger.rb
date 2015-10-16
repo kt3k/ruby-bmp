@@ -2,10 +2,16 @@
 
 module Bump
 
+    # The logging class
     class Logger
 
         no_color = false
 
+        # Logs the message.
+        #
+        # @param [String] message
+        # @param [Boolean] breakline
+        # @return [void]
         def log message = '', breakline = true
             print message
 
@@ -14,34 +20,29 @@ module Bump
             end
         end
 
+        # Logs the message in green.
+        #
+        # @param [String] message
+        # @param [Boolean] breakline
+        # @return [void]
         def log_green message = '', breakline = true
             log green(message), breakline
         end
 
+        # Logs the message in red.
+        #
+        # @param [String] message
+        # @param [Boolean] breakline
+        # @return [void]
         def log_red message = '', breakline = true
             log red(message), breakline
         end
 
-        def error message = '', breakline = true
-            puts message, breakline
-        end
-
-        def warn message = '', breakline = true
-            puts message, breakline
-        end
-
-        def info message = '', breakline = true
-            puts message, breakline
-        end
-
-        def debug message = '', breakline = true
-            puts message, breakline
-        end
-
-        def verbose message = '', breakline = true
-            puts message, breakline
-        end
-
+        # Colorize the text by the color code.
+        #
+        # @param [String] text
+        # @param [Integer] color_code
+        # @return [String]
         def colorize text, color_code
             if @no_color
                 text
@@ -50,10 +51,18 @@ module Bump
             end
         end
 
+        # Returns a green string.
+        #
+        # @param [String] text
+        # @return [String]
         def green text
             colorize text, 32
         end
 
+        # Returns a red string.
+        #
+        # @param [String] text
+        # @return [String]
         def red text
             colorize text, 31
         end
