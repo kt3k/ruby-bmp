@@ -45,6 +45,7 @@ module Bump
         # @return [void]
         def setPreid preid
             @version.setPreid preid
+            @after_version = @version.to_s
         end
 
         # Gets the file update rules

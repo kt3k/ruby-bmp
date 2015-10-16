@@ -19,16 +19,17 @@ module Bump
         # @return [void]
         def main
 
-            opts = Slop.parse do
-                banner "Usage: #{CLI_NAME} [-p|-m|-j] [-c]"
+            opts = Slop.parse do |o|
+                o.banner = "Usage: #{CLI_NAME} [-p|-m|-j] [-c]"
 
-                on :i, :info, 'show current version info'
-                on :p, :patch, 'bump patch (0.0.1) level'
-                on :m, :minor, 'bump minor (0.1.0) level'
-                on :j, :major, 'bump major (1.0.0) level'
-                on :c, :commit, 'commit bump changes (git required)'
-                on :h, :help, 'show this help and exit'
-                on :v, :version, 'show version and exit'
+                o.bool '-i', '--info', 'show current version info'
+                o.bool '-p', '--patch', 'bump patch (0.0.1) level'
+                o.bool '-m', '--minor', 'bump minor (0.1.0) level'
+                o.bool '-j', '--major', 'bump major (1.0.0) level'
+                o.bool '-c', '--commit', 'commit bump changes (git required)'
+                o.bool '-h', '--help', 'show this help and exit'
+                o.bool '-v', '--version', 'show version and exit'
+                o.string '-s', '--preid', 'set pre release version id (e.g. alpha, beta.1)'
             end
 
             app = Application.new opts.to_hash, opts.to_s, "#{CLI_NAME} v#{Bump::VERSION}", VERSION_FILE, Logger.new
