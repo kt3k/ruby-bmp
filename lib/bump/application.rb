@@ -59,8 +59,6 @@ module Bump
             log "Replacement target patterns are:"
 
             descriptor.rewriteRules.each do |rule|
-                rule.prepare
-
                 log "  #{rule.file}:", false
                 log_green " '#{rule.beforePattern}'"
             end
@@ -129,10 +127,6 @@ module Bump
             end
         end
 
-        def actionError
-            log_red @error_message
-        end
-
         def main
 
             action = selectAction
@@ -146,8 +140,6 @@ module Bump
                 actionInfo
             when :bump
                 actionBump
-            when :error
-                actionError
             end
 
         end
