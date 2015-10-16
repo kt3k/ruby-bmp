@@ -21,7 +21,7 @@ module Bump
 
         # Select the main action
         #
-        # @retrun [Symbol]
+        # @return [Symbol]
         def selectAction
             if @options[:help]
                 return :help
@@ -73,7 +73,7 @@ module Bump
 
         # Saves the bump info
         #
-        # @param [Bump::BumpInfo]
+        # @param [Bump::BumpInfo] bumpInfo
         def saveBumpInfo bumpInfo
             repo = BumpInfoRepository.new @file
 
@@ -82,7 +82,7 @@ module Bump
 
         # Shows the version patterns.
         #
-        # @param [Bump::BumpInfo]
+        # @param [Bump::BumpInfo] bumpInfo
         def showVersionPatterns bumpInfo
 
             log "Current Version:", false

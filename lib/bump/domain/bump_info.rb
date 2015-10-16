@@ -5,7 +5,7 @@ module Bump
 
     class BumpInfo
 
-        # @param [Bump::VersionNumber] vesion
+        # @param [Bump::VersionNumber] version
         # @param [Array] files
         def initialize version, files
             @version = version
