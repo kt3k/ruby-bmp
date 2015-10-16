@@ -1,1 +1,8 @@
 language: ruby
+
+rvm:
+- 2.0.0
+- 2.1.x
+- 2.2.x
+
+sudo: false
