@@ -1,27 +1,24 @@
 # TODO
 
 - Generate documentaion
+- support pre-release version number (of semver)
+- support build version number (of semver)
 
-- more exception handlings
-  - yaml parse error
-  - no `version` case
-  - no `files` case
+- yaml parse error handling
+- no `version` case handling
+- no `files` case handling
 
-- feature
-  - Add `this file is auto modified by bmp command` comment
-  - `placeholder` field
-  - interactive init command
-  - label
+- Add `this file is auto modified by bmp command` comment
+- interactive init command
 
-- test
-  - domain - FileRewriteRule
-  - domain - FileRewriteRuleFactory
-  - domain - VersionDescriptor
-  - domain - VersionDescriptorRepository
-  - Application
-  - CLI
-  - Logger
-  - Command
+- test FileRewriteRule
+- test FileRewriteRuleFactory
+- test VersionDescriptor
+- test VersionDescriptorRepository
+- test Application
+- test CLI
+- test Logger
+- test Command
 
 # DONE
 
