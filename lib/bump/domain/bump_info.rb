@@ -5,10 +5,11 @@ module Bump
 
     class BumpInfo
 
-        def initialize config
-            @config = config
-
-            @version = VersionNumberFactory.fromString @config['version']
+        # @param [Bump::VersionNumber] vesion
+        # @param [Array] files
+        def initialize version, files
+            @version = version
+            @files = files
 
             @before_version = @version.to_s
             @after_version = @version.to_s
@@ -52,9 +53,9 @@ module Bump
 
         # Creates file update rules according to the current settings.
         #
-        # @return [Bump::FileRewriteRule[]]
+        # @return [Bump::FileUpdateRule[]]
         def createUpdateRules
-            @config['files'].map { |file, pattern|
+            @files.map { |file, pattern|
                 FileUpdateRuleFactory.create(file, pattern, @before_version, @after_version)
             }.flatten
         end

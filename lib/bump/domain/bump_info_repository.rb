@@ -14,7 +14,13 @@ module Bump
         #
         # @param [String] file
         def fromFile
-            BumpInfo.new YAML.load_file @file
+
+            config = YAML.load_file @file
+            version = VersionNumberFactory.fromString config['version']
+            files = config['files']
+
+            BumpInfo.new version, files
+
         end
 
         # Saves the bump info
