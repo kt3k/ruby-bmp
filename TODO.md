@@ -1,14 +1,13 @@
 # TODO
 
 - gh-pages yardoc
-- support pre-release version number (of semver)
+- bmp -t|--touch -> create empty .bmp.yml
 
 - yaml parse error handling
 - no `version` case handling
 - no `files` case handling
 
-- Add `this file is auto modified by bmp command` comment
-- interactive init command
+- interactive init, bump --init
 
 - test FileRewriteRule
 - test FileRewriteRuleFactory
@@ -20,6 +19,7 @@
 - test Command
 
 # DONE
+- support pre-release version number (of semver)
 - support build version number (of semver) - pending
 - Generate documentaion
 - Rename file_rewrite_rule to file_update_rule
