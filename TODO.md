@@ -1,9 +1,6 @@
 # TODO
 
-- Rename file_rewrite_rule to file_update_rule
-- Rename version_descriptor to bump_info
-
-- Refactor application
+- Generate documentaion
 
 - more exception handlings
   - yaml parse error
@@ -28,6 +25,9 @@
 
 # DONE
 
+- Rename file_rewrite_rule to file_update_rule
+- Rename version_descriptor to bump_info
+- Refactor application
 - travis - done
 - coveralls - done
 - introduce simplecov - done

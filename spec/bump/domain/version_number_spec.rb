@@ -3,19 +3,19 @@
 require 'bump'
 require 'spec_helper'
 
-describe Bump::Version do
+describe Bump::VersionNumber do
 
     describe "#to_s" do
 
         it "returns version string" do
 
             # no suffix
-            version = Bump::Version.new 1, 2, 3
+            version = Bump::VersionNumber.new 1, 2, 3
 
             expect(version.to_s).to eq '1.2.3'
 
             # with a suffix
-            version = Bump::Version.new 1, 2, 3, 'rc1'
+            version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
             expect(version.to_s).to eq '1.2.3rc1'
 
@@ -27,7 +27,7 @@ describe Bump::Version do
 
         it "bumps patch level" do
 
-            version = Bump::Version.new 1, 2, 3
+            version = Bump::VersionNumber.new 1, 2, 3
 
             version.patchBump
 
@@ -37,7 +37,7 @@ describe Bump::Version do
 
         it "bumps 0.1.10 to 0.1.11" do
 
-            version = Bump::Version.new 0, 1, 10
+            version = Bump::VersionNumber.new 0, 1, 10
 
             version.patchBump
 
@@ -47,7 +47,7 @@ describe Bump::Version do
 
         it "remove suffix if it is set" do
 
-            version = Bump::Version.new 1, 2, 3, 'rc1'
+            version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
             version.patchBump
 
@@ -61,7 +61,7 @@ describe Bump::Version do
 
         it "bumps patch level" do
 
-            version = Bump::Version.new 1, 2, 3
+            version = Bump::VersionNumber.new 1, 2, 3
 
             version.minorBump
 
@@ -71,7 +71,7 @@ describe Bump::Version do
 
         it "remove suffix if it is set" do
 
-            version = Bump::Version.new 1, 2, 3, 'rc1'
+            version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
             version.minorBump
 
@@ -85,7 +85,7 @@ describe Bump::Version do
 
         it "bumps patch level" do
 
-            version = Bump::Version.new 1, 2, 3
+            version = Bump::VersionNumber.new 1, 2, 3
 
             version.majorBump
 
@@ -95,7 +95,7 @@ describe Bump::Version do
 
         it "remove suffix if it is set" do
 
-            version = Bump::Version.new 1, 2, 3, 'rc1'
+            version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
             version.majorBump
 
@@ -109,7 +109,7 @@ describe Bump::Version do
 
         it "appends a suffix" do
 
-            version = Bump::Version.new 1, 2, 3
+            version = Bump::VersionNumber.new 1, 2, 3
 
             version.append 'rc1'
 
@@ -119,7 +119,7 @@ describe Bump::Version do
 
         it "rewrite the suffix if it is already set" do
 
-            version = Bump::Version.new 1, 2, 3, 'rc1'
+            version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
             version.append 'rc2'
 

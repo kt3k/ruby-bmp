@@ -2,7 +2,7 @@
 
 module Bump
 
-    class Version
+    class VersionNumber
 
         def initialize major, minor, patch, suffix = ''
             @major = major

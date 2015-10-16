@@ -55,10 +55,10 @@ module Bump
 
         # Gets the bump info
         #
-        # @return [Bump::VersionDescriptor]
+        # @return [Bump::BumpInfo]
         def getBumpInfo
 
-            repo = VersionDescriptorRepository.new @file
+            repo = BumpInfoRepository.new @file
 
             begin
                 bumpInfo = repo.fromFile
@@ -73,16 +73,16 @@ module Bump
 
         # Saves the bump info
         #
-        # @param [Bump::VersionDescriptor]
+        # @param [Bump::BumpInfo]
         def saveBumpInfo bumpInfo
-            repo = VersionDescriptorRepository.new @file
+            repo = BumpInfoRepository.new @file
 
             repo.save bumpInfo
         end
 
         # Shows the version patterns.
         #
-        # @param [Bump::VersionDescriptor]
+        # @param [Bump::BumpInfo]
         def showVersionPatterns bumpInfo
 
             log "Current Version:", false
@@ -90,7 +90,7 @@ module Bump
 
             log "Version patterns:"
 
-            bumpInfo.rewriteRules.each do |rule|
+            bumpInfo.updateRules.each do |rule|
                 log "  #{rule.file}:", false
 
                 if rule.patternExists
@@ -157,7 +157,7 @@ module Bump
 
             bumpInfo.performUpdate
 
-            bumpInfo.rewriteRules.each do |rule|
+            bumpInfo.updateRules.each do |rule|
 
                 log "#{rule.file}"
                 log "  Performed pattern replacement:"

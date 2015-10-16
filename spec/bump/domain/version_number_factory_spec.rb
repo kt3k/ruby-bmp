@@ -2,13 +2,13 @@
 require 'bump'
 require 'spec_helper'
 
-describe Bump::VersionFactory do
+describe Bump::VersionNumberFactory do
 
     describe "#fromString" do
 
         it "creates version object from version string" do
 
-            version = Bump::VersionFactory.fromString "1.2.3a"
+            version = Bump::VersionNumberFactory.fromString "1.2.3a"
 
             expect(version.to_s).to eq "1.2.3a"
 
@@ -28,7 +28,7 @@ describe Bump::VersionFactory do
 
             expect(version.to_s).to eq "2.0.0rc1"
 
-            version = Bump::VersionFactory.fromString "1.2.100abc"
+            version = Bump::VersionNumberFactory.fromString "1.2.100abc"
 
             version.patchBump
 

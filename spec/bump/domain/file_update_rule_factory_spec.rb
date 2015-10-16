@@ -2,6 +2,6 @@
 require 'bump'
 require 'spec_helper'
 
-describe Bump::FileRewriteRuleFactory do
+describe Bump::FileUpdateRuleFactory do
 
 end

@@ -3,12 +3,12 @@ require 'yaml'
 
 module Bump
 
-    class VersionDescriptor
+    class BumpInfo
 
         def initialize config
             @config = config
 
-            @version = VersionFactory.fromString @config['version']
+            @version = VersionNumberFactory.fromString @config['version']
 
             @before_version = @version.to_s
             @after_version = @version.to_s
@@ -46,7 +46,7 @@ module Bump
             @config
         end
 
-        def rewriteRules
+        def updateRules
             createUpdateRules
         end
 
@@ -55,7 +55,7 @@ module Bump
         # @return [Bump::FileRewriteRule[]]
         def createUpdateRules
             @config['files'].map { |file, pattern|
-                FileRewriteRuleFactory.create(file, pattern, @before_version, @after_version)
+                FileUpdateRuleFactory.create(file, pattern, @before_version, @after_version)
             }.flatten
         end
 

@@ -2,7 +2,7 @@
 
 module Bump
 
-    class FileRewriteRule
+    class FileUpdateRule
 
         PLACEHOLDER_PATTERN = '%.%.%'
 
