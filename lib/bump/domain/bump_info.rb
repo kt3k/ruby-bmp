@@ -16,35 +16,27 @@ module Bump
 
         end
 
-        def resetAfterVersion
-            @after_version = @version.to_s
-            @config['version'] = @after_version
+        def version
+            @version
         end
 
-        def toYaml
-            @config.to_yaml
+        def files
+            @files
         end
 
         def majorBump
             @version.bump 'major'
-
-            resetAfterVersion
+            @after_version = @version.to_s
         end
 
         def minorBump
             @version.bump 'minor'
-
-            resetAfterVersion
+            @after_version = @version.to_s
         end
 
         def patchBump
             @version.bump 'patch'
-
-            resetAfterVersion
-        end
-
-        def config
-            @config
+            @after_version = @version.to_s
         end
 
         def updateRules

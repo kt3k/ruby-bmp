@@ -27,7 +27,16 @@ module Bump
         #
         # @param [Bump::BumpInfo] bumpInfo
         def save bumpInfo
-            File.write @file, bumpInfo.toYaml
+            File.write @file, toYaml(bumpInfo)
+        end
+
+        # @private
+        # @param [Bump::BumpInfo] bumpInfo
+        # @return [Hash]
+        def toYaml bumpInfo
+
+            {"version" => bumpInfo.version.to_s, "files" => bumpInfo.files}.to_yaml
+
         end
 
     end
