@@ -8,8 +8,10 @@ module Bump
     # The command line interface
     class CLI
 
+        # The bump info filename
         VERSION_FILE = '.bmp.yml'
 
+        # The cli name
         CLI_NAME = 'bmp'
 
         # The main routine

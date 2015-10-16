@@ -40,6 +40,13 @@ module Bump
             @after_version = @version.to_s
         end
 
+        # Sets the preid
+        #
+        # @return [void]
+        def setPreid preid
+            @version.setPreid preid
+        end
+
         # Gets the file update rules
         #
         # @return [Array<Bump::FileUpdateRules>]
@@ -49,6 +56,7 @@ module Bump
 
         # Creates file update rules according to the current settings.
         #
+        # @private
         # @return [Array<Bump::FileUpdateRule>]
         def createUpdateRules
             @files.map { |file, pattern|

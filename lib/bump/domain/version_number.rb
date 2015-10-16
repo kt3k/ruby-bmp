@@ -16,7 +16,10 @@ module Bump
             @preid = preid
         end
 
+        # Bumps the version at the given level
+        #
         # @param [Symbol] level
+        # @return [void]
         def bump level
 
             case level
@@ -34,18 +37,9 @@ module Bump
 
         end
 
-        def patchBump
-            bump :patch
-        end
-
-        def minorBump
-            bump :minor
-        end
-
-        def majorBump
-            bump :major
-        end
-
+        # Sets the preid
+        #
+        # @return [void]
         def setPreid preid
             @preid = preid
         end

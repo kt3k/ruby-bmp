@@ -7,6 +7,7 @@ module Bump
     # is able to perform actual file update
     class FileUpdateRule
 
+        # The placeholder pattern
         PLACEHOLDER_PATTERN = '%.%.%'
 
         # @param [String] file

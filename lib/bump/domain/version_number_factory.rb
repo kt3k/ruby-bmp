@@ -5,8 +5,13 @@ module Bump
     # The factory class for the version number
     class VersionNumberFactory
 
+        # Regexp for version expression
         VERSION_REGEXP = /^(\d+).(\d+).(\d+)(-(\S*))?$/
 
+        # Creates the version number object from the string
+        #
+        # @param [String] version_string
+        # @return [Bump::VersionNumber]
         def self.fromString version_string
             match = VERSION_REGEXP.match version_string
 
