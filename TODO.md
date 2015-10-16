@@ -1,5 +1,7 @@
 # TODO
 
+- Add frontend layer between slop and application
+- use mock library
 - gh-pages yardoc
 - bmp -t|--touch -> create empty .bmp.yml
 
