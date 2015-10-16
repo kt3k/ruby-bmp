@@ -55,7 +55,7 @@ module Bump
         #
         # @return [Boolean]
         def patternExists
-            fileGetContents.index @before_pattern
+            fileGetContents.index(@before_pattern) != nil
         end
 
         # Performs file update
