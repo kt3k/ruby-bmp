@@ -38,7 +38,7 @@ describe Bump::FileUpdateRule do
 
         it 'checks if the given pattern found in the file' do
 
-            rule = Bump::FileUpdateRule.new File.dirname(File.dirname File.dirname __FILE__) + '/fixture/dummy.txt', 'v%.%.%', '1.2.3', '2.0.0'
+            rule = Bump::FileUpdateRule.new 'spec/fixture/dummy.txt', 'v%.%.%', '1.2.3', '2.0.0'
 
             expect(rule.patternExists).to eq true
 
