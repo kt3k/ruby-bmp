@@ -36,11 +36,11 @@ module Bump
         end
 
         def actionVersion
-            @logger.log @version
+            log @version
         end
 
         def actionHelp
-            @logger.log @help
+            log @help
         end
 
         def actionInfo
@@ -49,20 +49,20 @@ module Bump
             begin
                 descriptor = repo.fromFile
             rescue Errno::ENOENT => e then
-                @logger.log "Error: the file `#{@file}` not found."
+                log_red "Error: the file `#{@file}` not found."
                 exit 1
             end
 
             @logger.log "Current Version is:", false
-            @logger.log_green " #{descriptor.beforeVersion}"
+            log_green " #{descriptor.beforeVersion}"
 
-            @logger.log "Replacement target patterns are:"
+            log "Replacement target patterns are:"
 
             descriptor.rewriteRules.each do |rule|
                 rule.prepare
 
                 @logger.log "  #{rule.file}:", false
-                @logger.log_green " '#{rule.beforePattern}'"
+                log_green " '#{rule.beforePattern}'"
             end
         end
 
@@ -73,44 +73,46 @@ module Bump
             begin
                 srv = repo.fromFile
             rescue Errno::ENOENT => e then
-                @logger.log "Error: the file `#{@file}` not found."
+
+                log_red "Error: the file `#{@file}` not found."
+
                 exit 1
             end
 
             if @options[:patch]
                 srv.patchBump
 
-                @logger.log 'Bump patch level'
-                @logger.log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
+                log 'Bump patch level'
+                log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
             end
 
             if @options[:minor]
                 srv.minorBump
 
-                @logger.log 'Bump minor level'
-                @logger.log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
+                log 'Bump minor level'
+                log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
             end
 
             if @options[:major]
                 srv.majorBump
 
-                @logger.log 'Bump major level'
-                @logger.log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
+                log 'Bump major level'
+                log_green "  #{srv.beforeVersion} => #{srv.afterVersion}"
             end
 
-            @logger.log
+            log
 
             srv.rewriteRules.each do |rule|
                 result = rule.perform
 
                 if result
-                    @logger.log "#{rule.file}"
-                    @logger.log "  Performed pattern replacement:"
-                    @logger.log_green "    '#{rule.beforePattern}' => '#{rule.afterPattern}'"
-                    @logger.log
+                    log "#{rule.file}"
+                    log "  Performed pattern replacement:"
+                    log_green "    '#{rule.beforePattern}' => '#{rule.afterPattern}'"
+                    log
                 else
-                    @logger.log_red "  Current version pattern ('#{rule.beforePattern}') not found!"
-                    @logger.log
+                    log_red "  Current version pattern ('#{rule.beforePattern}') not found!"
+                    log
 
                     exit 1
                 end
@@ -147,6 +149,24 @@ module Bump
             when :error
                 actionError
             end
+
+        end
+
+        def log message
+
+            @logger.log message
+
+        end
+
+        def log_red message
+
+            @logger.log_red message
+
+        end
+
+        def log_green message
+
+            @logger.log_green message
 
         end
 
