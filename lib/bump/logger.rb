@@ -20,24 +20,6 @@ module Bump
             end
         end
 
-        # Logs the message in green.
-        #
-        # @param [String] message
-        # @param [Boolean] breakline
-        # @return [void]
-        def log_green message = '', breakline = true
-            log green(message), breakline
-        end
-
-        # Logs the message in red.
-        #
-        # @param [String] message
-        # @param [Boolean] breakline
-        # @return [void]
-        def log_red message = '', breakline = true
-            log red(message), breakline
-        end
-
         # Colorize the text by the color code.
         #
         # @param [String] text

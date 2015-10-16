@@ -247,7 +247,7 @@ module Bump
         # @return [void]
         def log_red message, newline = true
 
-            @logger.log_red message, newline
+            log @logger.red(message), newline
 
         end
 
@@ -258,7 +258,7 @@ module Bump
         # @return [void]
         def log_green message, newline = true
 
-            @logger.log_green message, newline
+            log @logger.green(message), newline
 
         end
 
