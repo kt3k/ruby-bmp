@@ -40,7 +40,7 @@ describe Bump::FileUpdateRule do
 
             rule = Bump::FileUpdateRule.new 'spec/fixture/dummy.txt', 'v%.%.%', '1.2.3', '2.0.0'
 
-            expect(rule.patternExists).to eq true
+            expect(rule.patternExists).to be true
 
         end
 
