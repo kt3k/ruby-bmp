@@ -1,5 +1,3 @@
-
-
 require 'yaml'
 
 module Bump
@@ -21,9 +19,8 @@ module Bump
 
             config = YAML.load_file @file
             version = VersionNumberFactory.fromString config['version']
-            files = config['files']
 
-            BumpInfo.new version, files
+            BumpInfo.new version, config['files'], config['commit']
 
         end
 
@@ -40,7 +37,15 @@ module Bump
         # @return [Hash]
         def toYaml bumpInfo
 
-            {"version" => bumpInfo.version.to_s, "files" => bumpInfo.files}.to_yaml
+            hash = { "version" => bumpInfo.version.to_s }
+
+            if bumpInfo.commit
+                hash["commit"] = bumpInfo.commit
+            end
+
+            hash["files"] = bumpInfo.files
+
+            hash.to_yaml
 
         end
 

@@ -1,4 +1,3 @@
-
 require 'yaml'
 
 module Bump
@@ -6,11 +5,13 @@ module Bump
     # The bump information model
     class BumpInfo
 
-        # @param [Bump::VersionNumber] version
-        # @param [Array] files
-        def initialize version, files
+        # @param [Bump::VersionNumber] version The version
+        # @param [Array] files The replace patterns
+        # @param [String] commit The commit message
+        def initialize version, files, commit='Bump to version v%.%.%'
             @version = version
             @files = files
+            @commit = commit
 
             @before_version = @version.to_s
             @after_version = @version.to_s
@@ -29,6 +30,20 @@ module Bump
         # @return [Array]
         def files
             @files
+        end
+
+        # Returns the commit message
+        #
+        # @return [String]
+        def commit
+            @commit
+        end
+
+        # Gets the commit message with the current version number
+        #
+        # @return [String]
+        def getCommitMessage
+            @commit.sub '%.%.%', @after_version
         end
 
         # Performs bumping version

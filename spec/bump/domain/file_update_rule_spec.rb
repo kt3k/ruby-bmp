@@ -1,4 +1,3 @@
-
 require 'bump'
 require 'spec_helper'
 

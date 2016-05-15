@@ -204,7 +204,7 @@ module Bump
 
             if @options[:commit]
                 comm.exec "git add ."
-                comm.exec "git commit -m 'Bump to version v#{bumpInfo.afterVersion}'"
+                comm.exec "git commit -m '#{bumpInfo.getCommitMessage}'"
                 comm.exec "git tag v#{bumpInfo.afterVersion}"
             end
         end
