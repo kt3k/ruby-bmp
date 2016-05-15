@@ -98,15 +98,28 @@ module Bump
             log "Version patterns:"
 
             bumpInfo.updateRules.each do |rule|
+
+                if not rule.fileExists
+
+                    log_red "  #{rule.file}:", false
+                    log_red " '#{rule.beforePattern}' (file not found)"
+
+                    next
+
+                end
+
                 log "  #{rule.file}:", false
 
-                if rule.patternExists
-                    log_green " '#{rule.beforePattern}'"
-                else
-                    log_red " '#{rule.beforePattern}' (pattern not found)"
-                end
-            end
+                if not rule.patternExists
 
+                    log_red " '#{rule.beforePattern}' (pattern not found)"
+
+                    next
+
+                end
+
+                log_green " '#{rule.beforePattern}'"
+            end
         end
 
         # handler of `bmp [--info]`

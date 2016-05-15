@@ -104,7 +104,7 @@ module Bump
 
             createUpdateRules.each do |rule|
 
-                if not rule.patternExists
+                if not rule.fileExists or not rule.patternExists
                     return false
                 end
 

@@ -51,6 +51,12 @@ module Bump
             File.read @file, :encoding => Encoding::UTF_8
         end
 
+        # Returns true if the file exists
+        # @return [Boolean]
+        def fileExists
+            File.exist? @file
+        end
+
         # Checks if the pattern found in the file
         #
         # @return [Boolean]
