@@ -19,37 +19,55 @@ This install `bmp` command
 
 ## Usage
 
-### `.bmp.yml` version description file
+### `.bmp.yml` file
 
-put `.bmp.yml` file on the top of your repository like following:
+First you need to put `.bmp.yml` file on the top of your repository like the following:
 
-```
+```yml
 ---
 version: 0.1.6
+commit: Bump to version v%.%.%
 files:
   gradle.properties: version=%.%.%
   README.md:
+    - coveralls-gradle-plugin v%.%.%
+    - org.kt3k.gradle.plugin:coveralls-gradle-plugin:%.%.%
+```
+
+`version` property is the current version number of the repository.
+
+`commit` property is the commit comment of bump commits. This field is optional. The default is `Bump to version v%.%.%`.
+
+`files` are the patterns of the files which contain version numbers in them. The key is the filename and value is the pattern containing the version number. `%.%.%` in the pettern string expresses the current vesion number.
+
+Example:
+```yml
+gradle.properties: version=%.%.%
+```
+
+The expression above means the file `./gradle.properties` contains the pattern `version=0.1.6` (for now) and `%.%.%` part means the current version number (`0.1.6`) and it will be replaced in each version bumping.
+
+You can set arrays of string to the value for a pattern. In that case, every string is considered as a separate pattern and all will be replaced with the next version in each bump
+
+Example:
+```yml
+README.md:
   - coveralls-gradle-plugin v%.%.%
   - org.kt3k.gradle.plugin:coveralls-gradle-plugin:%.%.%
 ```
 
-`version` value is the current version number of the repository.
+## The commands
 
-`files` are the mappings of the files which contain version numbers in them.
-
-```
-gradle.properties: version=%.%.%
-```
-
-The expression above means the file `./gradle.properties` contains the string `version=0.1.6` (because the current version is 0.1.6) and `%.%.%` is the placeholder for current version number and will updated on version bumps.
-
-### bmp command
+### Info
 
 Show current version info:
 ```
 bmp [-i|--info]
 ```
 
+This shows errors if exist. You can check the contents of `.bmp.yml` with this command.
+
+### Bump
 
 bump patch (0.0.1) level:
 ```
@@ -71,10 +89,30 @@ bmp -j|--major
 ```
 
 
-commit bump results
+Add `preid`:
+```
+bmp --preid beta.1 # This performs 1.2.3 => 1.2.3-beta.1
+```
+
+Remove `preid` (which means you `release` it):
+```
+bmp --release
+```
+
+### Commit (and tag)
+
+Commit bump results (and tag it):
 ```
 bmp -c|--commit
 ```
 
 `bmp -c` commits all the changes now the repository has. Be careful.
 And this command also tag it as `vX.Y.Z`.
+
+# History
+
+- 2016-05-15   v1.2.0   Add commit property in `.bmp.yml`.
+
+# License
+
+MIT
