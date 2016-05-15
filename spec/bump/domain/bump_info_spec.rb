@@ -6,7 +6,7 @@ describe Bump::BumpInfo do
 
     before :each do
 
-        @info = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 3), { "README.md" => "v%.%.%", "package.json" => "v%.%.%" }
+        @info = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 3), { "README.md" => "v%.%.%", "package.json" => "v%.%.%" }, nil
 
     end
 

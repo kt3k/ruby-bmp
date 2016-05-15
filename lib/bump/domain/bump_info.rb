@@ -8,10 +8,14 @@ module Bump
         # @param [Bump::VersionNumber] version The version
         # @param [Array] files The replace patterns
         # @param [String] commit The commit message
-        def initialize version, files, commit='Bump to version v%.%.%'
+        def initialize version, files, commit
             @version = version
             @files = files
             @commit = commit
+
+            if not @commit
+                @commit = 'Bump to version v%.%.%'
+            end
 
             @before_version = @version.to_s
             @after_version = @version.to_s
