@@ -82,7 +82,7 @@ module Bump
         # @return [void]
         def showVersionPatterns(bump_info)
             log 'Current Version:', false
-            log_green " #{bump_info.beforeVersion}"
+            log_green " #{bump_info.before_version}"
 
             log 'Version patterns:'
 
@@ -170,7 +170,7 @@ module Bump
 
                 bump_info.bump level
                 log "Bump #{level} level"
-                log_green "  #{bump_info.beforeVersion} => #{bump_info.afterVersion}"
+                log_green "  #{bump_info.before_version} => #{bump_info.after_version}"
                 break
 
             end
@@ -180,13 +180,13 @@ module Bump
                 bump_info.setPreid preid
                 log 'Set pre-release version id: ', false
                 log_green preid
-                log_green "  #{bump_info.beforeVersion} => #{bump_info.afterVersion}"
+                log_green "  #{bump_info.before_version} => #{bump_info.after_version}"
             end
 
             if @options[:release]
                 bump_info.setPreid nil
                 log 'Remove pre-release version id'
-                log_green "  #{bump_info.beforeVersion} => #{bump_info.afterVersion}"
+                log_green "  #{bump_info.before_version} => #{bump_info.after_version}"
             end
 
             log
@@ -204,7 +204,7 @@ module Bump
             if @options[:commit]
                 comm.exec 'git add .'
                 comm.exec "git commit -m '#{bump_info.getCommitMessage}'"
-                comm.exec "git tag v#{bump_info.afterVersion}"
+                comm.exec "git tag v#{bump_info.after_version}"
             end
         end
 

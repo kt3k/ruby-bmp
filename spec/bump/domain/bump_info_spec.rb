@@ -10,22 +10,13 @@ describe Bump::BumpInfo do
 
     end
 
-    describe '#version' do
+    describe '#getCommitMessage' do
 
-        it 'returns the version object' do
+        it 'gets the commit message' do
 
-            expect(@info.version.class).to eq Bump::VersionNumber
-            expect(@info.version.to_s).to eq '1.2.3'
+            @info = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 3), { 'README.md' => 'v%.%.%', 'package.json' => 'v%.%.%' }, 'chore(bump): v%.%.%'
 
-        end
-
-    end
-
-    describe '#files' do
-
-        it 'returns the hash of the files' do
-
-            expect(@info.files).to eq 'README.md' => 'v%.%.%', 'package.json' => 'v%.%.%'
+            expect(@info.getCommitMessage).to eq 'chore(bump): v1.2.3'
 
         end
 
@@ -43,6 +34,69 @@ describe Bump::BumpInfo do
 
             @info.bump :major
             expect(@info.version.to_s).to eq '2.0.0'
+
+        end
+
+    end
+
+    describe '#setPreid' do
+
+        it 'sets the preid' do
+
+            @info.setPreid 'beta.1'
+
+            expect(@info.version.to_s).to eq '1.2.3-beta.1'
+
+        end
+
+    end
+
+    describe '#updateRules' do
+
+        it 'gets the file update rules' do
+
+            expect(@info.updateRules.class).to eq Array
+            expect(@info.updateRules.size).to eq 2
+            expect(@info.updateRules[0].class).to eq Bump::FileUpdateRule
+            expect(@info.updateRules[1].class).to eq Bump::FileUpdateRule
+
+        end
+
+    end
+
+    describe '#performUpdate' do
+
+        it 'performs the update on files' do
+
+            File.write 'spec/fixture/tmp_dummy.txt', File.read('spec/fixture/dummy.txt', encoding: Encoding::UTF_8)
+
+            @info = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 3, 'rc1'), { 'spec/fixture/tmp_dummy.txt' => 'v%.%.%' }, nil
+
+            @info.bump :patch
+
+            @info.performUpdate
+
+            expect(File.read('spec/fixture/tmp_dummy.txt', encoding: Encoding::UTF_8).strip).to eq 'dummy v1.2.4'
+
+            File.delete 'spec/fixture/tmp_dummy.txt'
+
+        end
+
+    end
+
+    describe '#check' do
+
+        it 'returns false if the files or petterns are unavailable' do
+
+            expect(@info.check).to be false
+
+        end
+
+        it 'returns true if the files and patterns are available' do
+
+            @info = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 3, 'rc1'), { 'spec/fixture/dummy.txt' => 'v%.%.%' }, nil
+
+            expect(@info.check).to be true
 
         end
 

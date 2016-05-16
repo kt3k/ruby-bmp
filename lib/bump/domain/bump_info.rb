@@ -5,7 +5,7 @@ module Bump
     # The bump information model
     class BumpInfo
 
-        attr_reader :version, :files, :commit
+        attr_reader :version, :files, :commit, :after_version, :before_version
 
         # @param [Bump::VersionNumber] version The version
         # @param [Array] files The replace patterns
@@ -82,20 +82,6 @@ module Bump
             end
 
             true
-        end
-
-        # Returns the version number after the bumping.
-        #
-        # @return [String]
-        def afterVersion
-            @after_version
-        end
-
-        # Returns the version number before the bumping.
-        #
-        # @return [String]
-        def beforeVersion
-            @before_version
         end
 
     end
