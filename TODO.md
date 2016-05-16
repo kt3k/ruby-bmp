@@ -1,9 +1,7 @@
 # TODO
 
-- Add frontend layer between slop and application
 - use mock library
 - gh-pages yardoc
-- bmp -t|--touch -> create empty .bmp.yml
 
 - yaml parse error handling
 - no `version` case handling
@@ -11,16 +9,16 @@
 
 - interactive init, bump --init
 
-- test FileRewriteRule
-- test FileRewriteRuleFactory
-- test VersionDescriptor
-- test VersionDescriptorRepository
 - test Application
 - test CLI
 - test Logger
 - test Command
 
 # DONE
+- test FileRewriteRule
+- test FileRewriteRuleFactory
+- test VersionDescriptor
+- test VersionDescriptorRepository
 - support pre-release version number (of semver)
 - support build version number (of semver) - pending
 - Generate documentaion
