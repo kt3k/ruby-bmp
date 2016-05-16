@@ -5,6 +5,10 @@ module Bump
     # The logging class
     class Logger
 
+        def initialize(no_color = nil)
+            @no_color = no_color
+        end
+
         # Logs the message.
         #
         # @param [String] message
