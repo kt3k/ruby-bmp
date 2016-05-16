@@ -7,17 +7,16 @@ module Bump
     # The command line interface
     class CLI
 
+        attr_reader :app
+
         # The bump info filename
         VERSION_FILE = '.bmp.yml'.freeze
 
         # The cli name
         CLI_NAME = 'bmp'.freeze
 
-        # The main routine
-        #
-        # @return [void]
-        def main
-            opts = Slop.parse do |o|
+        def initialize
+            opts = Slop.parse suppress_errors: true do |o|
 
                 o.banner = "Usage: #{CLI_NAME} [-p|-m|-j] [-c]"
 
@@ -33,9 +32,12 @@ module Bump
 
             end
 
-            app = Application.new opts.to_hash, opts.to_s, "#{CLI_NAME} v#{Bump::VERSION}", VERSION_FILE, Logger.new
+            @app = Application.new opts.to_hash, opts.to_s, "#{CLI_NAME} v#{Bump::VERSION}", VERSION_FILE, Logger.new
+        end
 
-            app.main
+        # The main of cli
+        def main
+            @app.main
         end
 
     end
