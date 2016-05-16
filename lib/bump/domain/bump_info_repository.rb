@@ -7,7 +7,7 @@ module Bump
     class BumpInfoRepository
 
         # @param [String] file
-        def initialize file
+        def initialize(file)
             @file = file
         end
 
@@ -16,37 +16,31 @@ module Bump
         # @param [String] file
         # @return [Bump::BumpInfo]
         def fromFile
-
             config = YAML.load_file @file
             version = VersionNumberFactory.fromString config['version']
 
             BumpInfo.new version, config['files'], config['commit']
-
         end
 
         # Saves the bump info
         #
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
-        def save bumpInfo
-            File.write @file, toYaml(bumpInfo)
+        def save(bump_info)
+            File.write @file, toYaml(bump_info)
         end
 
         # @private
         # @param [Bump::BumpInfo] bumpInfo
         # @return [Hash]
-        def toYaml bumpInfo
+        def toYaml(bump_info)
+            hash = { 'version' => bump_info.version.to_s }
 
-            hash = { "version" => bumpInfo.version.to_s }
+            hash['commit'] = bump_info.commit if bump_info.commit
 
-            if bumpInfo.commit
-                hash["commit"] = bumpInfo.commit
-            end
-
-            hash["files"] = bumpInfo.files
+            hash['files'] = bump_info.files
 
             hash.to_yaml
-
         end
 
     end

@@ -22,6 +22,7 @@ describe Bump::FileUpdateRuleFactory do
             expect(rules[0].class).to eq Bump::FileUpdateRule
             expect(rules[1].class).to eq Bump::FileUpdateRule
             expect(rules.size).to eq 2
+
         end
 
         it 'creates a FileUpdateRule if the given param is not a string nor an array' do

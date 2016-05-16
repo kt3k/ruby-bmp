@@ -10,9 +10,9 @@ describe Bump::BumpInfoRepository do
 
             repo = Bump::BumpInfoRepository.new 'spec/fixture/bmp.yml'
 
-            bumpInfo = repo.fromFile
+            bump_info = repo.fromFile
 
-            expect(bumpInfo.class).to eq Bump::BumpInfo
+            expect(bump_info.class).to eq Bump::BumpInfo
 
         end
 
@@ -24,15 +24,16 @@ describe Bump::BumpInfoRepository do
 
             repo = Bump::BumpInfoRepository.new 'spec/fixture/bmp.yml'
 
-            bumpInfo = repo.fromFile
-            bumpInfo = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 4), bumpInfo.files, bumpInfo.commit
+            bump_info = repo.fromFile
+            bump_info = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 4), bump_info.files, bump_info.commit
 
-            repo.save bumpInfo
+            repo.save bump_info
 
-            bumpInfo = repo.fromFile
-            expect(bumpInfo.version.to_s).to eq '1.2.4'
+            bump_info = repo.fromFile
+            expect(bump_info.version.to_s).to eq '1.2.4'
 
         end
+
     end
 
 end

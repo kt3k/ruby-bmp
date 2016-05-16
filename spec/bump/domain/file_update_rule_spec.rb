@@ -4,7 +4,9 @@ require 'spec_helper'
 describe Bump::FileUpdateRule do
 
     before :each do
+
         @rule = Bump::FileUpdateRule.new 'spec/fixture/dummy.txt', 'v%.%.%', '1.2.3', '2.0.0'
+
     end
 
     describe '#file' do

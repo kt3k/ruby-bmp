@@ -5,19 +5,15 @@ module Bump
     # The logging class
     class Logger
 
-        no_color = false
-
         # Logs the message.
         #
         # @param [String] message
         # @param [Boolean] breakline
         # @return [void]
-        def log message = '', breakline = true
+        def log(message = '', breakline = true)
             print message
 
-            if breakline
-                print "\n"
-            end
+            print "\n" if breakline
         end
 
         # Colorize the text by the color code.
@@ -25,7 +21,7 @@ module Bump
         # @param [String] text
         # @param [Integer] color_code
         # @return [String]
-        def colorize text, color_code
+        def colorize(text, color_code)
             if @no_color
                 text
             else
@@ -37,7 +33,7 @@ module Bump
         #
         # @param [String] text
         # @return [String]
-        def green text
+        def green(text)
             colorize text, 32
         end
 
@@ -45,7 +41,7 @@ module Bump
         #
         # @param [String] text
         # @return [String]
-        def red text
+        def red(text)
             colorize text, 31
         end
 

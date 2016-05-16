@@ -12,10 +12,10 @@ module Bump
         #
         # @param [String] version_string
         # @return [Bump::VersionNumber]
-        def self.fromString version_string
+        def self.fromString(version_string)
             match = VERSION_REGEXP.match version_string
 
-            return VersionNumber.new match[1].to_i, match[2].to_i, match[3].to_i, match[5]
+            VersionNumber.new match[1].to_i, match[2].to_i, match[3].to_i, match[5]
         end
 
     end

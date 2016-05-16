@@ -5,42 +5,20 @@ module Bump
     # The bump information model
     class BumpInfo
 
+        attr_reader :version, :files, :commit
+
         # @param [Bump::VersionNumber] version The version
         # @param [Array] files The replace patterns
         # @param [String] commit The commit message
-        def initialize version, files, commit
+        def initialize(version, files, commit)
             @version = version
             @files = files
             @commit = commit
 
-            if not @commit
-                @commit = 'Bump to version v%.%.%'
-            end
+            @commit = 'Bump to version v%.%.%' unless @commit
 
             @before_version = @version.to_s
             @after_version = @version.to_s
-
-        end
-
-        # Returns the version number object
-        #
-        # @return [Bump::VersionNumber]
-        def version
-            @version
-        end
-
-        # Returns files setting list
-        #
-        # @return [Array]
-        def files
-            @files
-        end
-
-        # Returns the commit message
-        #
-        # @return [String]
-        def commit
-            @commit
         end
 
         # Gets the commit message with the current version number
@@ -54,7 +32,7 @@ module Bump
         #
         # @param [Symbol] level
         # @return [void]
-        def bump level
+        def bump(level)
             @version.bump level
             @after_version = @version.to_s
         end
@@ -62,7 +40,7 @@ module Bump
         # Sets the preid
         #
         # @return [void]
-        def setPreid preid
+        def setPreid(preid)
             @version.setPreid preid
             @after_version = @version.to_s
         end
@@ -79,39 +57,31 @@ module Bump
         # @private
         # @return [Array<Bump::FileUpdateRule>]
         def createUpdateRules
-            @files.map { |file, pattern|
+            @files.map do |file, pattern|
+
                 FileUpdateRuleFactory.create(file, pattern, @before_version, @after_version)
-            }.flatten
+
+            end.flatten
         end
 
         # Performs all updates.
         #
         # @return [void]
         def performUpdate
-
-            createUpdateRules.each do |rule|
-
-                rule.perform
-
-            end
-
+            createUpdateRules.each(&:perform)
         end
 
         # Checks the all the version patterns are available
         #
         # @return [Boolean]
         def check
-
             createUpdateRules.each do |rule|
 
-                if not rule.fileExists or not rule.patternExists
-                    return false
-                end
+                return false if !rule.fileExists || !rule.patternExists
 
             end
 
-            return true
-
+            true
         end
 
         # Returns the version number after the bumping.

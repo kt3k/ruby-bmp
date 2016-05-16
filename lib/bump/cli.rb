@@ -1,4 +1,3 @@
-
 require 'bump/version'
 require 'yaml'
 require 'slop'
@@ -9,17 +8,17 @@ module Bump
     class CLI
 
         # The bump info filename
-        VERSION_FILE = '.bmp.yml'
+        VERSION_FILE = '.bmp.yml'.freeze
 
         # The cli name
-        CLI_NAME = 'bmp'
+        CLI_NAME = 'bmp'.freeze
 
         # The main routine
         #
         # @return [void]
         def main
-
             opts = Slop.parse do |o|
+
                 o.banner = "Usage: #{CLI_NAME} [-p|-m|-j] [-c]"
 
                 o.bool '-i', '--info', 'show current version info'
@@ -31,12 +30,12 @@ module Bump
                 o.bool '-v', '--version', 'show the version of this command and exit'
                 o.bool '-r', '--release', 'remove the pre-release version id'
                 o.string '-s', '--preid', 'set the pre-release version id (e.g. alpha, beta.1)'
+
             end
 
             app = Application.new opts.to_hash, opts.to_s, "#{CLI_NAME} v#{Bump::VERSION}", VERSION_FILE, Logger.new
 
             app.main
-
         end
 
     end

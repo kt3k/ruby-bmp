@@ -6,14 +6,14 @@ module Bump
     class Command
 
         # @param [Bump::Logger] logger
-        def initialize logger
+        def initialize(logger)
             @logger = logger
         end
 
         # @param [String] command
         # @return [void]
-        def exec command
-            @logger.log "===> " + command
+        def exec(command)
+            @logger.log '===> ' + command
             @logger.log `#{command}`
         end
 

@@ -5,6 +5,7 @@ require 'bump'
 describe Bump::Application do
 
     before :each do
+
         @help_message = 'help_message'
         @version_exp = "Bmp #{Bump::VERSION}"
         @bmp_file = 'spec/fixture/bmp.yml'
@@ -16,7 +17,7 @@ describe Bump::Application do
 
         it 'returns :help if the options contain :help' do
 
-            app = Bump::Application.new({ :help => true }, @help_message, @version_exp, @bmp_file, @logger)
+            app = Bump::Application.new({ help: true }, @help_message, @version_exp, @bmp_file, @logger)
 
             expect(app.selectAction).to eq :help
 
@@ -24,7 +25,7 @@ describe Bump::Application do
 
         it 'returns :version if the :version option preset' do
 
-            app = Bump::Application.new({ :version => true }, @help_message, @version_exp, @bmp_file, @logger)
+            app = Bump::Application.new({ version: true }, @help_message, @version_exp, @bmp_file, @logger)
 
             expect(app.selectAction).to eq :version
 
@@ -32,7 +33,7 @@ describe Bump::Application do
 
         it 'returns :info if the :info option present' do
 
-            app = Bump::Application.new({ :info => true }, @help_message, @version_exp, @bmp_file, @logger)
+            app = Bump::Application.new({ info: true }, @help_message, @version_exp, @bmp_file, @logger)
 
             expect(app.selectAction).to eq :info
 
@@ -40,22 +41,22 @@ describe Bump::Application do
 
         it 'returns :bump if one of :major, :minor, :patch, :commit, :preid, :release options present' do
 
-            app = Bump::Application.new({ :major => true }, @help_message, @version_exp, @bmp_file, @logger)
+            app = Bump::Application.new({ major: true }, @help_message, @version_exp, @bmp_file, @logger)
             expect(app.selectAction).to eq :bump
 
-            app = Bump::Application.new({ :minor => true }, @help_message, @version_exp, @bmp_file, @logger)
+            app = Bump::Application.new({ minor: true }, @help_message, @version_exp, @bmp_file, @logger)
             expect(app.selectAction).to eq :bump
 
-            app = Bump::Application.new({ :patch => true }, @help_message, @version_exp, @bmp_file, @logger)
+            app = Bump::Application.new({ patch: true }, @help_message, @version_exp, @bmp_file, @logger)
             expect(app.selectAction).to eq :bump
 
-            app = Bump::Application.new({ :commit => true }, @help_message, @version_exp, @bmp_file, @logger)
+            app = Bump::Application.new({ commit: true }, @help_message, @version_exp, @bmp_file, @logger)
             expect(app.selectAction).to eq :bump
 
-            app = Bump::Application.new({ :preid => true }, @help_message, @version_exp, @bmp_file, @logger)
+            app = Bump::Application.new({ preid: true }, @help_message, @version_exp, @bmp_file, @logger)
             expect(app.selectAction).to eq :bump
 
-            app = Bump::Application.new({ :release => true }, @help_message, @version_exp, @bmp_file, @logger)
+            app = Bump::Application.new({ release: true }, @help_message, @version_exp, @bmp_file, @logger)
             expect(app.selectAction).to eq :bump
 
         end

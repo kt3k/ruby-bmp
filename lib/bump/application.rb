@@ -12,7 +12,7 @@ module Bump
         # @param [String] version The version expression of this command
         # @param [String] file The file name of bump info file
         # @param [Bump::Logger] logger The logger
-        def initialize options, help, version, file, logger
+        def initialize(options, help, version, file, logger)
             @options = options
             @help = help
             @version = version
@@ -24,24 +24,16 @@ module Bump
         #
         # @return [Symbol]
         def selectAction
-            if @options[:help]
-                return :help
-            end
+            return :help if @options[:help]
 
-            if @options[:version]
-                return :version
-            end
+            return :version if @options[:version]
 
-            if @options[:info]
-                return :info
-            end
+            return :info if @options[:info]
 
-            if @options[:major] || @options[:minor] || @options[:patch] || @options[:commit] || @options[:preid] || @options[:release]
-                return :bump
-            end
+            return :bump if @options[:major] || @options[:minor] || @options[:patch] || @options[:commit] || @options[:preid] || @options[:release]
 
             # command without options invokes info action
-            return :info
+            :info
         end
 
         # handler of `bmp --version`
@@ -62,44 +54,41 @@ module Bump
         #
         # @return [Bump::BumpInfo]
         def getBumpInfo
-
             repo = BumpInfoRepository.new @file
 
             begin
-                bumpInfo = repo.fromFile
-            rescue Errno::ENOENT => e then
+                bump_info = repo.fromFile
+            rescue Errno::ENOENT
                 log_red "Error: the file `#{@file}` not found."
                 exit 1
             end
 
-            return bumpInfo
-
+            bump_info
         end
 
         # Saves the bump info
         #
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
-        def saveBumpInfo bumpInfo
+        def saveBumpInfo(bump_info)
             repo = BumpInfoRepository.new @file
 
-            repo.save bumpInfo
+            repo.save bump_info
         end
 
         # Shows the version patterns.
         #
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
-        def showVersionPatterns bumpInfo
+        def showVersionPatterns(bump_info)
+            log 'Current Version:', false
+            log_green " #{bump_info.beforeVersion}"
 
-            log "Current Version:", false
-            log_green " #{bumpInfo.beforeVersion}"
+            log 'Version patterns:'
 
-            log "Version patterns:"
+            bump_info.updateRules.each do |rule|
 
-            bumpInfo.updateRules.each do |rule|
-
-                if not rule.fileExists
+                unless rule.fileExists
 
                     log_red "  #{rule.file}:", false
                     log_red " '#{rule.beforePattern}' (file not found)"
@@ -110,7 +99,7 @@ module Bump
 
                 log "  #{rule.file}:", false
 
-                if not rule.patternExists
+                unless rule.patternExists
 
                     log_red " '#{rule.beforePattern}' (pattern not found)"
 
@@ -119,6 +108,7 @@ module Bump
                 end
 
                 log_green " '#{rule.beforePattern}'"
+
             end
         end
 
@@ -126,47 +116,42 @@ module Bump
         #
         # @return [void]
         def actionInfo
+            bump_info = getBumpInfo
 
-            bumpInfo = getBumpInfo
+            showVersionPatterns bump_info
 
-            showVersionPatterns bumpInfo
-
-            if bumpInfo.check
+            if bump_info.check
                 exit 0
             else
                 exit 1
             end
-
         end
-
 
         # Checks the bumping is possible.
         #
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
-        def checkBumpInfo bumpInfo
-
-            if not bumpInfo.check
-                log_red "Some patterns are invalid!"
-                log_red "Stops updating version numbers."
+        def checkBumpInfo(bump_info)
+            unless bump_info.check
+                log_red 'Some patterns are invalid!'
+                log_red 'Stops updating version numbers.'
                 log
 
-                showVersionPatterns bumpInfo
+                showVersionPatterns bump_info
 
                 exit 1
             end
-
         end
 
         # Reports the bumping details.
         #
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
-        def report bumpInfo
-            bumpInfo.updateRules.each do |rule|
+        def report(bump_info)
+            bump_info.updateRules.each do |rule|
 
-                log "#{rule.file}"
-                log "  Performed pattern replacement:"
+                log rule.file.to_s
+                log '  Performed pattern replacement:'
                 log_green "    '#{rule.beforePattern}' => '#{rule.afterPattern}'"
                 log
 
@@ -177,48 +162,49 @@ module Bump
         #
         # @return [void]
         def actionBump
-
-            bumpInfo = getBumpInfo
+            bump_info = getBumpInfo
 
             [:major, :minor, :patch].each do |level|
-                if @options[level]
-                    bumpInfo.bump level
-                    log "Bump #{level} level"
-                    log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
-                    break
-                end
+
+                next unless @options[level]
+
+                bump_info.bump level
+                log "Bump #{level} level"
+                log_green "  #{bump_info.beforeVersion} => #{bump_info.afterVersion}"
+                break
+
             end
 
             if @options[:preid]
                 preid = @options[:preid]
-                bumpInfo.setPreid preid
-                log "Set pre-release version id: ", false
+                bump_info.setPreid preid
+                log 'Set pre-release version id: ', false
                 log_green preid
-                log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
+                log_green "  #{bump_info.beforeVersion} => #{bump_info.afterVersion}"
             end
 
             if @options[:release]
-                bumpInfo.setPreid nil
-                log "Remove pre-release version id"
-                log_green "  #{bumpInfo.beforeVersion} => #{bumpInfo.afterVersion}"
+                bump_info.setPreid nil
+                log 'Remove pre-release version id'
+                log_green "  #{bump_info.beforeVersion} => #{bump_info.afterVersion}"
             end
 
             log
 
-            checkBumpInfo bumpInfo
+            checkBumpInfo bump_info
 
-            bumpInfo.performUpdate
+            bump_info.performUpdate
 
-            report bumpInfo
+            report bump_info
 
-            saveBumpInfo bumpInfo
+            saveBumpInfo bump_info
 
             comm = Command.new @logger
 
             if @options[:commit]
-                comm.exec "git add ."
-                comm.exec "git commit -m '#{bumpInfo.getCommitMessage}'"
-                comm.exec "git tag v#{bumpInfo.afterVersion}"
+                comm.exec 'git add .'
+                comm.exec "git commit -m '#{bump_info.getCommitMessage}'"
+                comm.exec "git tag v#{bump_info.afterVersion}"
             end
         end
 
@@ -226,7 +212,6 @@ module Bump
         #
         # @return [void]
         def main
-
             action = selectAction
 
             case action
@@ -239,7 +224,6 @@ module Bump
             when :bump
                 actionBump
             end
-
         end
 
         # Logs the message
@@ -247,10 +231,8 @@ module Bump
         # @param [String] message
         # @param [Boolean] newline
         # @return [void]
-        def log message = '', newline = true
-
+        def log(message = '', newline = true)
             @logger.log message, newline
-
         end
 
         # Logs the message in red
@@ -258,10 +240,8 @@ module Bump
         # @param [String] message
         # @param [Boolean] newline
         # @return [void]
-        def log_red message, newline = true
-
+        def log_red(message, newline = true)
             log @logger.red(message), newline
-
         end
 
         # Logs the message in green
@@ -269,10 +249,8 @@ module Bump
         # @param [String] message
         # @param [Boolean] newline
         # @return [void]
-        def log_green message, newline = true
-
+        def log_green(message, newline = true)
             log @logger.green(message), newline
-
         end
 
     end

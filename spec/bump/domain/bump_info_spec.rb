@@ -6,7 +6,7 @@ describe Bump::BumpInfo do
 
     before :each do
 
-        @info = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 3), { "README.md" => "v%.%.%", "package.json" => "v%.%.%" }, nil
+        @info = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 3), { 'README.md' => 'v%.%.%', 'package.json' => 'v%.%.%' }, nil
 
     end
 
@@ -25,7 +25,7 @@ describe Bump::BumpInfo do
 
         it 'returns the hash of the files' do
 
-            expect(@info.files).to eq({ "README.md" => "v%.%.%", "package.json" => "v%.%.%" })
+            expect(@info.files).to eq 'README.md' => 'v%.%.%', 'package.json' => 'v%.%.%'
 
         end
 
@@ -45,6 +45,7 @@ describe Bump::BumpInfo do
             expect(@info.version.to_s).to eq '2.0.0'
 
         end
+
     end
 
 end

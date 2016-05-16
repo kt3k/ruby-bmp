@@ -3,4 +3,3 @@
 require 'bump'
 
 Bump::CLI.new.main
-

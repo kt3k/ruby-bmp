@@ -7,8 +7,10 @@ module Bump
     # is able to perform actual file update
     class FileUpdateRule
 
+        attr_reader :file
+
         # The placeholder pattern
-        PLACEHOLDER_PATTERN = '%.%.%'
+        PLACEHOLDER_PATTERN = '%.%.%'.freeze
 
         # @param [String] file
         # @param [String] pattern
@@ -21,13 +23,6 @@ module Bump
             @after_version = after_version
             @before_pattern = @pattern.sub PLACEHOLDER_PATTERN, @before_version
             @after_pattern = @pattern.sub PLACEHOLDER_PATTERN, @after_version
-        end
-
-        # Gets the file name
-        #
-        # @return [String]
-        def file
-            @file
         end
 
         # Gets the version string before bumping
@@ -48,7 +43,7 @@ module Bump
         #
         # @return [String]
         def fileGetContents
-            File.read @file, :encoding => Encoding::UTF_8
+            File.read @file, encoding: Encoding::UTF_8
         end
 
         # Returns true if the file exists
@@ -61,7 +56,7 @@ module Bump
         #
         # @return [Boolean]
         def patternExists
-            fileGetContents.index(@before_pattern) != nil
+            !fileGetContents.index(@before_pattern).nil?
         end
 
         # Performs file update

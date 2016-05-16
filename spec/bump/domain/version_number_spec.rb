@@ -5,9 +5,9 @@ require 'spec_helper'
 
 describe Bump::VersionNumber do
 
-    describe "#to_s" do
+    describe '#to_s' do
 
-        it "returns version string" do
+        it 'returns version string' do
 
             # no suffix
             version = Bump::VersionNumber.new 1, 2, 3
@@ -23,9 +23,9 @@ describe Bump::VersionNumber do
 
     end
 
-    describe "#bump :patch" do
+    describe '#bump :patch' do
 
-        it "bumps patch level" do
+        it 'bumps patch level' do
 
             version = Bump::VersionNumber.new 1, 2, 3
 
@@ -35,7 +35,7 @@ describe Bump::VersionNumber do
 
         end
 
-        it "bumps 0.1.10 to 0.1.11" do
+        it 'bumps 0.1.10 to 0.1.11' do
 
             version = Bump::VersionNumber.new 0, 1, 10
 
@@ -45,7 +45,7 @@ describe Bump::VersionNumber do
 
         end
 
-        it "remove suffix if it is set" do
+        it 'remove suffix if it is set' do
 
             version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
@@ -57,9 +57,9 @@ describe Bump::VersionNumber do
 
     end
 
-    describe "#bump :minor" do
+    describe '#bump :minor' do
 
-        it "bumps patch level" do
+        it 'bumps patch level' do
 
             version = Bump::VersionNumber.new 1, 2, 3
 
@@ -69,7 +69,7 @@ describe Bump::VersionNumber do
 
         end
 
-        it "remove suffix if it is set" do
+        it 'remove suffix if it is set' do
 
             version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
@@ -81,9 +81,9 @@ describe Bump::VersionNumber do
 
     end
 
-    describe "#bump :major" do
+    describe '#bump :major' do
 
-        it "bumps patch level" do
+        it 'bumps patch level' do
 
             version = Bump::VersionNumber.new 1, 2, 3
 
@@ -93,7 +93,7 @@ describe Bump::VersionNumber do
 
         end
 
-        it "remove suffix if it is set" do
+        it 'remove suffix if it is set' do
 
             version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 
@@ -105,9 +105,9 @@ describe Bump::VersionNumber do
 
     end
 
-    describe "#setPreid" do
+    describe '#setPreid' do
 
-        it "sets the preid" do
+        it 'sets the preid' do
 
             version = Bump::VersionNumber.new 1, 2, 3
 
@@ -117,7 +117,7 @@ describe Bump::VersionNumber do
 
         end
 
-        it "rewrite the preid if it is already set" do
+        it 'rewrite the preid if it is already set' do
 
             version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
 

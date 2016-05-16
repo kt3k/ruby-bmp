@@ -9,7 +9,7 @@ module Bump
         # @param [Integer] minor
         # @param [Integer] patch
         # @param [String, nil] preid
-        def initialize major, minor, patch, preid = nil
+        def initialize(major, minor, patch, preid = nil)
             @major = major
             @minor = minor
             @patch = patch
@@ -20,8 +20,7 @@ module Bump
         #
         # @param [Symbol] level
         # @return [void]
-        def bump level
-
+        def bump(level)
             case level
             when :major
                 @major += 1
@@ -34,13 +33,12 @@ module Bump
                 @patch += 1
             end
             @preid = nil
-
         end
 
         # Sets the preid
         #
         # @return [void]
-        def setPreid preid
+        def setPreid(preid)
             @preid = preid
         end
 
@@ -50,12 +48,9 @@ module Bump
         def to_s
             label = @major.to_s + '.' + @minor.to_s + '.' + @patch.to_s
 
-            if @preid
-                label = label + '-' + @preid
-            end
+            label = label + '-' + @preid if @preid
 
             label
-
         end
 
     end
