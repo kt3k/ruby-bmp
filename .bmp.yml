@@ -3,4 +3,4 @@ version: 1.2.0
 commit: 'chore(version): bump to v%.%.%'
 files:
   README.md: Bmp v%.%.%
-  lib/bump/version.rb: VERSION = "%.%.%"
+  lib/bump/version.rb: VERSION = '%.%.%'
