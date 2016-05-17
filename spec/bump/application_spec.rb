@@ -115,17 +115,22 @@ describe Bump::Application do
 
         end
 
-        it 'exits 0 when the bmp.yml not found' do
+        it 'exits 1 when the pattern in bmp.yml not found' do
+            app = Bump::Application.new({ info: true }, @help_message, @version_exp, 'spec/fixture/bmp_invalid_pattern.yml', @logger)
 
+            expect(app).to receive(:exit).with(1).once
+            allow(app).to receive(:exit) { throw StandardError.new }
+
+            expect { app.main }.to raise_error(StandardError)
+        end
+
+        it 'exits 1 when the bmp.yml not found' do
             app = Bump::Application.new({ info: true }, @help_message, @version_exp, 'spec/fixture/bmp_not_exists.yml', @logger)
 
             expect(app).to receive(:exit).with(1).once
             allow(app).to receive(:exit) { throw StandardError.new }
 
             expect { app.main }.to raise_error(StandardError)
-
         end
-
     end
-
 end
