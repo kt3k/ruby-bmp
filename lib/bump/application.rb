@@ -58,7 +58,7 @@ module Bump
 
             begin
                 bump_info = repo.fromFile
-            rescue Errno::ENOENT
+            rescue Errno::ENOENT => e
                 log_red "Error: the file `#{@file}` not found."
                 exit 1
             end

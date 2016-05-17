@@ -9,7 +9,11 @@ describe Bump::Application do
         @help_message = 'help_message'
         @version_exp = "Bmp #{Bump::VERSION}"
         @bmp_file = 'spec/fixture/bmp.yml'
-        @logger = Bump::Logger.new
+
+        @logger = double 'logger'
+        allow(@logger).to receive(:log)
+        allow(@logger).to receive(:green)
+        allow(@logger).to receive(:red)
 
     end
 
@@ -65,6 +69,60 @@ describe Bump::Application do
 
             app = Bump::Application.new({}, @help_message, @version_exp, @bmp_file, @logger)
             expect(app.selectAction).to eq :info
+
+        end
+
+    end
+
+    describe '#main' do
+
+        it 'logs version when the version option is given' do
+
+            expect(@logger).to receive(:log).with("Bmp #{Bump::VERSION}", true).once
+
+            app = Bump::Application.new({ version: true }, @help_message, @version_exp, @bmp_file, @logger)
+            app.main
+
+        end
+
+        it 'logs help message when the help option is given' do
+
+            expect(@logger).to receive(:log).with('help_message', true).once
+
+            app = Bump::Application.new({ help: true }, @help_message, @version_exp, @bmp_file, @logger)
+            app.main
+
+        end
+
+        it 'shows bump info and exit 0 when there is no error' do
+
+            app = Bump::Application.new({ info: true }, @help_message, @version_exp, @bmp_file, @logger)
+            app.stub(:exit)
+
+            expect(app).to receive(:exit).with(0).once
+
+            app.main
+
+        end
+
+        it 'shows bump info and exit 1 when there are errors' do
+
+            app = Bump::Application.new({ info: true }, @help_message, @version_exp, 'spec/fixture/bmp_invalid.yml', @logger)
+
+            expect(app).to receive(:exit).with(1).once
+
+            app.main
+
+        end
+
+        it 'exits 0 when the bmp.yml not found' do
+
+            app = Bump::Application.new({ info: true }, @help_message, @version_exp, 'spec/fixture/bmp_not_exists.yml', @logger)
+
+            expect(app).to receive(:exit).with(1).once
+            app.stub(:exit) { throw :error }
+
+            expect { app.main }.to raise_error
 
         end
 

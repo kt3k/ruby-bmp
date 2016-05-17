@@ -7,14 +7,16 @@
 - no `version` case handling
 - no `files` case handling
 
-- interactive init, bump --init
+- refactor: do not exit in application.rb, raise error instead.
+- refactor: remove Bump::CLI, move it in bin/bmp
 
+- feat: interactive init, bump --init
+
+# DONE
 - test Application
 - test CLI
 - test Logger
 - test Command
-
-# DONE
 - test FileRewriteRule
 - test FileRewriteRuleFactory
 - test VersionDescriptor
