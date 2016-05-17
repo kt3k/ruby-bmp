@@ -72,9 +72,8 @@ module Bump
         end
 
         # Checks the all the version patterns are available
-        #
         # @return [Boolean]
-        def check
+        def is_valid
             createUpdateRules.each do |rule|
 
                 return false if !rule.fileExists || !rule.patternExists
@@ -83,7 +82,5 @@ module Bump
 
             true
         end
-
     end
-
 end

@@ -84,11 +84,11 @@ describe Bump::BumpInfo do
 
     end
 
-    describe '#check' do
+    describe '#is_valid' do
 
         it 'returns false if the files or petterns are unavailable' do
 
-            expect(@info.check).to be false
+            expect(@info.is_valid).to be false
 
         end
 
@@ -96,7 +96,7 @@ describe Bump::BumpInfo do
 
             @info = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 3, 'rc1'), { 'spec/fixture/dummy.txt' => 'v%.%.%' }, nil
 
-            expect(@info.check).to be true
+            expect(@info.is_valid).to be true
 
         end
 
