@@ -132,15 +132,15 @@ module Bump
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
         def checkBumpInfo(bump_info)
-            unless bump_info.check
-                log_red 'Some patterns are invalid!'
-                log_red 'Stops updating version numbers.'
-                log
+            return if bump_info.check
 
-                showVersionPatterns bump_info
+            log_red 'Some patterns are invalid!'
+            log_red 'Stops updating version numbers.'
+            log
 
-                exit 1
-            end
+            showVersionPatterns bump_info
+
+            exit 1
         end
 
         # Reports the bumping details.

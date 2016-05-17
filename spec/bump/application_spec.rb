@@ -97,7 +97,7 @@ describe Bump::Application do
         it 'shows bump info and exit 0 when there is no error' do
 
             app = Bump::Application.new({ info: true }, @help_message, @version_exp, @bmp_file, @logger)
-            app.stub(:exit)
+            allow(app).to receive(:exit)
 
             expect(app).to receive(:exit).with(0).once
 
@@ -120,9 +120,9 @@ describe Bump::Application do
             app = Bump::Application.new({ info: true }, @help_message, @version_exp, 'spec/fixture/bmp_not_exists.yml', @logger)
 
             expect(app).to receive(:exit).with(1).once
-            app.stub(:exit) { throw :error }
+            allow(app).to receive(:exit) { throw StandardError.new }
 
-            expect { app.main }.to raise_error
+            expect { app.main }.to raise_error(StandardError)
 
         end
 
