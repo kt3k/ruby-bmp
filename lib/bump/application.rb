@@ -67,7 +67,6 @@ module Bump
         end
 
         # Saves the bump info
-        #
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
         def saveBumpInfo(bump_info)
@@ -77,7 +76,6 @@ module Bump
         end
 
         # Shows the version patterns.
-        #
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
         def showVersionPatterns(bump_info)
@@ -88,28 +86,34 @@ module Bump
 
             bump_info.updateRules.each do |rule|
 
-                unless rule.fileExists
-
-                    log_red "  #{rule.file}:", false
-                    log_red " '#{rule.beforePattern}' (file not found)"
-
-                    next
-
-                end
-
-                log "  #{rule.file}:", false
-
-                unless rule.patternExists
-
-                    log_red " '#{rule.beforePattern}' (pattern not found)"
-
-                    next
-
-                end
-
-                log_green " '#{rule.beforePattern}'"
+                print_rule rule
 
             end
+        end
+
+        # Prints the pattern info for the given rule
+        # @param [Bump::FileUpdateRule] rule The rule
+        def print_rule(rule)
+            unless rule.fileExists
+
+                log_red "  #{rule.file}:", false
+                log_red " '#{rule.beforePattern}' (file not found)"
+
+                return
+
+            end
+
+            log "  #{rule.file}:", false
+
+            unless rule.patternExists
+
+                log_red " '#{rule.beforePattern}' (pattern not found)"
+
+                return
+
+            end
+
+            log_green " '#{rule.beforePattern}'"
         end
 
         # handler of `bmp [--info]`
