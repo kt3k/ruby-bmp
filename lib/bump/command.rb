@@ -13,8 +13,8 @@ module Bump
         # @param [String] command
         # @return [void]
         def exec(command)
-            @logger.log '===> ' + command
-            @logger.log `#{command}`
+            @logger.log @logger.green('+' + command)
+            @logger.log `#{command}`, nil
         end
 
     end

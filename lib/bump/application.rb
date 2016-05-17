@@ -202,6 +202,7 @@ module Bump
             comm = Command.new @logger
 
             if @options[:commit]
+                @logger.log '===> executing commands'
                 comm.exec 'git add .'
                 comm.exec "git commit -m '#{bump_info.getCommitMessage}'"
                 comm.exec "git tag v#{bump_info.after_version}"

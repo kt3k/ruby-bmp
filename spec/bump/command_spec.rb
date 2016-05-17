@@ -8,8 +8,8 @@ describe Bump::Command do
 
             comm = Bump::Command.new logger
 
-            expect(logger).to receive(:log).with '===> echo 1'
-            expect(logger).to receive(:log).with "1\n"
+            expect(logger).to receive(:green).with('+echo 1').once
+            expect(logger).to receive(:log).with("1\n").once
 
             comm.exec 'echo 1'
 
