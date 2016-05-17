@@ -27,10 +27,13 @@ describe Bump::BumpInfoRepository do
             bump_info = repo.fromFile
             bump_info = Bump::BumpInfo.new Bump::VersionNumber.new(1, 2, 4), bump_info.files, bump_info.commit
 
+            repo = Bump::BumpInfoRepository.new 'spec/fixture/tmp_bmp.yml'
             repo.save bump_info
 
             bump_info = repo.fromFile
             expect(bump_info.version.to_s).to eq '1.2.4'
+
+            File.delete 'spec/fixture/tmp_bmp.yml'
 
         end
 
