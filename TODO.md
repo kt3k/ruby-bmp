@@ -6,11 +6,10 @@
 - no `version` case handling
 - no `files` case handling
 
-- refactor: application.rb returns boolean, bin/bmp exits with the returned boolean
-
 - feat: interactive init, bump --init
 
 # DONE
+- refactor: application.rb returns boolean, bin/bmp exits with the returned boolean
 - use mock library
 - test Application
 - test CLI
