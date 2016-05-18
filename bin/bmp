@@ -4,15 +4,15 @@ require 'bump'
 require 'slop'
 
 exit Bump::CLI.new(Slop.parse do |o|
-    o.banner = "Usage: #{Bump::CLI::CLI_NAME} [-p|-m|-j] [-c]"
+  o.banner = "Usage: #{Bump::CLI::CLI_NAME} [-p|-m|-j] [-c]"
 
-    o.bool '-i', '--info', 'show current version info'
-    o.bool '-p', '--patch', 'bump patch (0.0.1) level'
-    o.bool '-m', '--minor', 'bump minor (0.1.0) level'
-    o.bool '-j', '--major', 'bump major (1.0.0) level'
-    o.bool '-c', '--commit', 'commit bump changes (git required)'
-    o.bool '-h', '--help', 'show this help and exit'
-    o.bool '-v', '--version', 'show the version of this command and exit'
-    o.bool '-r', '--release', 'remove the pre-release version id'
-    o.string '-s', '--preid', 'set the pre-release version id (e.g. alpha, beta.1)'
+  o.bool '-i', '--info', 'show current version info'
+  o.bool '-p', '--patch', 'bump patch (0.0.1) level'
+  o.bool '-m', '--minor', 'bump minor (0.1.0) level'
+  o.bool '-j', '--major', 'bump major (1.0.0) level'
+  o.bool '-c', '--commit', 'commit bump changes (git required)'
+  o.bool '-h', '--help', 'show this help and exit'
+  o.bool '-v', '--version', 'show the version of this command and exit'
+  o.bool '-r', '--release', 'remove the pre-release version id'
+  o.string '-s', '--preid', 'set the pre-release version id (e.g. alpha, beta.1)'
 end).main
