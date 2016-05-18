@@ -7,7 +7,7 @@ describe Bump::CLI do
 
         it 'calls app.main' do
 
-            cli = Bump::CLI.new
+            cli = Bump::CLI.new({})
 
             expect(cli.app).to receive(:main).once
 
