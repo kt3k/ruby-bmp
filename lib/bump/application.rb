@@ -21,23 +21,29 @@ module Bump
 
         # Returns a symbol which represents the action to perform.
         # @return [Symbol]
-        def selectAction
+        def select_action
             return :help if @options[:help]
 
             return :version if @options[:version]
 
             return :info if @options[:info]
 
-            return :bump if @options[:major] || @options[:minor] || @options[:patch] || @options[:commit] || @options[:preid] || @options[:release]
+            return :bump if bump_option? @options
 
             # command without options invokes info action
             :info
         end
 
+        # Returns true iff it's a bump option.
+        # @param [Hash] options The options
+        def bump_option?(options)
+            options[:major] || options[:minor] || options[:patch] || options[:commit] || options[:preid] || options[:release]
+        end
+
         # handler of `bmp --version`
         #
         # @return [void]
-        def actionVersion
+        def action_version
             log @version
 
             true
@@ -46,7 +52,7 @@ module Bump
         # handler of `bmp --help`
         #
         # @return [void]
-        def actionHelp
+        def action_help
             log @help
 
             true
@@ -55,7 +61,7 @@ module Bump
         # Gets the bump info
         # @private
         # @return [Bump::BumpInfo]
-        def getBumpInfo
+        def create_bump_info
             repo = BumpInfoRepository.new @file
 
             begin
@@ -71,7 +77,7 @@ module Bump
         # Saves the bump info
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
-        def saveBumpInfo(bump_info)
+        def save_bump_info(bump_info)
             repo = BumpInfoRepository.new @file
 
             repo.save bump_info
@@ -80,7 +86,7 @@ module Bump
         # Shows the version patterns.
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
-        def showVersionPatterns(bump_info)
+        def print_version_patterns(bump_info)
             log 'Current Version:', false
             log_green " #{bump_info.before_version}"
 
@@ -115,12 +121,12 @@ module Bump
         # handler of `bmp [--info]`
         #
         # @return [void]
-        def actionInfo
-            bump_info = getBumpInfo
+        def action_info
+            bump_info = create_bump_info
 
             return false if bump_info.nil?
 
-            showVersionPatterns bump_info
+            print_version_patterns bump_info
 
             bump_info.valid?
         end
@@ -133,13 +139,11 @@ module Bump
             log_red 'Stops updating version numbers.'
             log
 
-            showVersionPatterns bump_info
+            print_version_patterns bump_info
         end
 
         # Reports the bumping details.
-        #
         # @param [Bump::BumpInfo] bumpInfo
-        # @return [void]
         def report(bump_info)
             bump_info.updateRules.each do |rule|
                 log rule.file.to_s
@@ -149,38 +153,14 @@ module Bump
             end
         end
 
-        # handler of `bmp --patch|--minor|--major|--commit`
-        #
-        # @return [void]
-        def actionBump
-            bump_info = getBumpInfo
+        # The bump action
+        # @return [Boolean] true iff success
+        def action_bump
+            bump_info = create_bump_info
 
             return false if bump_info.nil?
 
-            [:major, :minor, :patch].each do |level|
-                next unless @options[level]
-
-                bump_info.bump level
-                log "Bump #{level} level"
-                log_green "  #{bump_info.before_version} => #{bump_info.after_version}"
-                break
-            end
-
-            if @options[:preid]
-                preid = @options[:preid]
-                bump_info.setPreid preid
-                log 'Set pre-release version id: ', false
-                log_green preid
-                log_green "  #{bump_info.before_version} => #{bump_info.after_version}"
-            end
-
-            if @options[:release]
-                bump_info.setPreid nil
-                log 'Remove pre-release version id'
-                log_green "  #{bump_info.before_version} => #{bump_info.after_version}"
-            end
-
-            log
+            print_bump_plan bump_info
 
             unless bump_info.valid?
                 print_invalid_bump_info bump_info
@@ -192,33 +172,92 @@ module Bump
 
             report bump_info
 
-            saveBumpInfo bump_info
+            save_bump_info bump_info
 
-            if @options[:commit]
-                @logger.log '===> executing commands'
-                @command.exec 'git add .'
-                @command.exec "git commit -m '#{bump_info.getCommitMessage}'"
-                @command.exec "git tag v#{bump_info.after_version}"
-            end
+            commit_and_tag bump_info if @options[:commit]
 
             true
+        end
+
+        # Gets the requested bump level.
+        # @return [Symbol]
+        def bump_level
+            return :major if @options[:major]
+            return :minor if @options[:minor]
+            return :patch if @options[:patch]
+        end
+
+        # Prints the version bump plan.
+        # @param [Bump::BumpInfo] bump_info The bump info
+        def print_bump_plan(bump_info)
+            level = bump_level
+            print_bump_plan_level level, bump_info unless level.nil?
+
+            preid = @options[:preid]
+            print_bump_plan_preid preid, bump_info unless preid.nil?
+
+            print_bump_plan_release bump_info if @options[:release]
+
+            log
+        end
+
+        # Prints the bump plan for the given level.
+        # @param [Symbol] level The level
+        # @param [Bump::BumpInfo] bump_info The bump info
+        def print_bump_plan_level(level, bump_info)
+            bump_info.bump level
+
+            log "Bump #{level} level"
+            print_version_transition bump_info
+        end
+
+        # Prints the bump plan for the give preid.
+        # @param [Bump::BumpInfo] bump_info The bump info
+        def print_bump_plan_preid(preid, bump_info)
+            bump_info.setPreid preid
+
+            log 'Set pre-release version id: ', false
+            log_green preid
+            print_version_transition bump_info
+        end
+
+        # Prints the bump plan for the release
+        # @param [Bump::BumpInfo] bump_info The bump info
+        def print_bump_plan_release(bump_info)
+            bump_info.setPreid nil
+
+            log 'Remove pre-release version id'
+            print_version_transition bump_info
+        end
+
+        # Prints the version transition.
+        # @param [Bump::BumpInfo] bump_info The bump info
+        def print_version_transition(bump_info)
+            log_green "  #{bump_info.before_version} => #{bump_info.after_version}"
+        end
+
+        # Commits current changes and tag it by the current version.
+        # @param [Bump::BumpInfo] bump_info The bump info
+        def commit_and_tag(bump_info)
+            @logger.log '===> executing commands'
+            @command.exec 'git add .'
+            @command.exec "git commit -m '#{bump_info.getCommitMessage}'"
+            @command.exec "git tag v#{bump_info.after_version}"
         end
 
         # The entry point
         #
         # @return [void]
         def main
-            action = selectAction
-
-            case action
+            case select_action
             when :version
-                actionVersion
+                action_version
             when :help
-                actionHelp
+                action_help
             when :info
-                actionInfo
+                action_info
             when :bump
-                actionBump
+                action_bump
             end
         end
 
