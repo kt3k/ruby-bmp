@@ -1,18 +1,17 @@
 # TODO
 
-- use mock library
-- gh-pages yardoc
+- upload document, gh-pages yardoc
 
 - yaml parse error handling
 - no `version` case handling
 - no `files` case handling
 
-- refactor: do not exit in application.rb, raise error instead.
-- refactor: remove Bump::CLI, move it in bin/bmp
+- refactor: application.rb returns boolean, bin/bmp exits with the returned boolean
 
 - feat: interactive init, bump --init
 
 # DONE
+- use mock library
 - test Application
 - test CLI
 - test Logger
