@@ -1,12 +1,9 @@
 require 'bump/version'
 require 'yaml'
-require 'slop'
 
 module Bump
-
     # The command line interface
     class CLI
-
         attr_reader :app
 
         # The bump info filename
@@ -23,7 +20,5 @@ module Bump
         def main
             @app.main
         end
-
     end
-
 end

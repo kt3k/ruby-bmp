@@ -16,10 +16,6 @@ Style/IndentationWidth:
 
 Style/EmptyLinesAroundBlockBody:
   Enabled: false
-Style/EmptyLinesAroundClassBody:
-  Enabled: false
-Style/EmptyLinesAroundModuleBody:
-  Enabled: false
 
 Style/MethodName:
   Enabled: false

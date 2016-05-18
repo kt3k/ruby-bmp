@@ -1,10 +1,6 @@
-
-
 module Bump
-
     # Command class executes shell command
     class Command
-
         # @param [Bump::Logger] logger
         def initialize(logger)
             @logger = logger
@@ -16,7 +12,5 @@ module Bump
             @logger.log @logger.green('+' + command)
             @logger.log `#{command}`, nil
         end
-
     end
-
 end

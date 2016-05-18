@@ -1,6 +1,7 @@
 #! /usr/bin/env ruby
 
 require 'bump'
+require 'slop'
 
 exit Bump::CLI.new(Slop.parse do |o|
     o.banner = "Usage: #{Bump::CLI::CLI_NAME} [-p|-m|-j] [-c]"

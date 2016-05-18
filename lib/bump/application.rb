@@ -1,12 +1,8 @@
-# lib/bump/application.rb
-
 require 'bump/command'
 
 module Bump
-
     # The application
     class Application
-
         # @param [Hash] options The cli options
         # @param [String] help The help message
         # @param [String] version The version expression of this command
@@ -262,7 +258,5 @@ module Bump
         def log_green(message, newline = true)
             log @logger.green(message), newline
         end
-
     end
-
 end

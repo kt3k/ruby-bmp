@@ -1,11 +1,9 @@
 require 'yaml'
 
 module Bump
-
     # The repository class for the bump info
     # persistence in file as yaml string
     class BumpInfoRepository
-
         # @param [String] file
         def initialize(file)
             @file = file
@@ -42,7 +40,5 @@ module Bump
 
             hash.to_yaml
         end
-
     end
-
 end

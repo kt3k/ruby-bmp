@@ -1,12 +1,8 @@
-
-
 module Bump
-
     # The file update rule model
     #
     # is able to perform actual file update
     class FileUpdateRule
-
         attr_reader :file
 
         # The placeholder pattern
@@ -65,7 +61,5 @@ module Bump
         def perform
             File.write @file, fileGetContents.sub(@before_pattern, @after_pattern)
         end
-
     end
-
 end

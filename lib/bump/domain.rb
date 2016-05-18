@@ -1,5 +1,3 @@
-# lib/bump/domain.rb
-
 require 'bump/domain/version_number'
 require 'bump/domain/version_number_factory'
 require 'bump/domain/bump_info'
