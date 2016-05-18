@@ -1,4 +1,3 @@
-
 require 'simplecov'
 require 'coveralls'
 
@@ -8,9 +7,5 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
 ]
 
 SimpleCov.start do
-
     add_filter '/spec/'
-
 end
-
-# Coveralls.wear!

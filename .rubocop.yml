@@ -14,9 +14,6 @@ Style/CyclomaticComplexity:
 Style/IndentationWidth:
   Width: 4
 
-Style/EmptyLinesAroundBlockBody:
-  Enabled: false
-
 Style/MethodName:
   Enabled: false
 
