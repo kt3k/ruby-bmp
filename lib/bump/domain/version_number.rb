@@ -1,6 +1,8 @@
 module Bump
     # The version number model
     class VersionNumber
+        attr_writer :preid
+
         # @param [Integer] major
         # @param [Integer] minor
         # @param [Integer] patch
@@ -31,15 +33,7 @@ module Bump
             @preid = nil
         end
 
-        # Sets the preid
-        #
-        # @return [void]
-        def setPreid(preid)
-            @preid = preid
-        end
-
         # Returns the string representation of the version
-        #
         # @return [String]
         def to_s
             label = @major.to_s + '.' + @minor.to_s + '.' + @patch.to_s

@@ -77,22 +77,4 @@ describe Bump::VersionNumber do
             expect(version.to_s).to eq '2.0.0'
         end
     end
-
-    describe '#setPreid' do
-        it 'sets the preid' do
-            version = Bump::VersionNumber.new 1, 2, 3
-
-            version.setPreid 'rc1'
-
-            expect(version.to_s).to eq '1.2.3-rc1'
-        end
-
-        it 'rewrite the preid if it is already set' do
-            version = Bump::VersionNumber.new 1, 2, 3, 'rc1'
-
-            version.setPreid 'rc2'
-
-            expect(version.to_s).to eq '1.2.3-rc2'
-        end
-    end
 end
