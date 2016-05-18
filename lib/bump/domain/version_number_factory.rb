@@ -1,10 +1,6 @@
-
-
 module Bump
-
     # The factory class for the version number
     class VersionNumberFactory
-
         # Regexp for version expression
         VERSION_REGEXP = /^(\d+).(\d+).(\d+)(-(\S*))?$/
 
@@ -17,7 +13,5 @@ module Bump
 
             VersionNumber.new match[1].to_i, match[2].to_i, match[3].to_i, match[5]
         end
-
     end
-
 end

@@ -1,10 +1,6 @@
-
-
 module Bump
-
     # The factory class for the file update rule model
     class FileUpdateRuleFactory
-
         # Creates the file update rule from the given params.
         #
         # @param [String] file The filename
@@ -22,7 +18,5 @@ module Bump
                 return FileUpdateRule.new file, nil, before_version, after_version
             end
         end
-
     end
-
 end

@@ -1,4 +1,3 @@
-
 require 'bump/version'
 require 'bump/domain'
 require 'bump/application'

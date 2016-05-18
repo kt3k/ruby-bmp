@@ -1,10 +1,8 @@
 require 'yaml'
 
 module Bump
-
     # The bump information model
     class BumpInfo
-
         attr_reader :version, :files, :commit, :after_version, :before_version
 
         # @param [Bump::VersionNumber] version The version

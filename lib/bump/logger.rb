@@ -1,10 +1,6 @@
-# lib/bump/logger.rb
-
 module Bump
-
     # The logging class
     class Logger
-
         def initialize(no_color = nil)
             @no_color = no_color
         end
@@ -48,7 +44,5 @@ module Bump
         def red(text)
             colorize text, 31
         end
-
     end
-
 end

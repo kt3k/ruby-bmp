@@ -1,10 +1,6 @@
-# lib/bump/domain/version.rb
-
 module Bump
-
     # The version number model
     class VersionNumber
-
         # @param [Integer] major
         # @param [Integer] minor
         # @param [Integer] patch
@@ -52,7 +48,5 @@ module Bump
 
             label
         end
-
     end
-
 end
