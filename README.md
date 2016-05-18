@@ -1,4 +1,4 @@
-# Bmp v1.3.0
+# Bmp v1.3.1
 [![Gem Version](https://img.shields.io/gem/v/bmp.svg)](http://badge.fury.io/rb/bmp)
 [![Build Status](https://img.shields.io/travis/kt3k/bmp.svg)](https://travis-ci.org/kt3k/bmp)
 [![Coverage Status](https://img.shields.io/coveralls/kt3k/bmp.svg)](https://coveralls.io/r/kt3k/bmp)
