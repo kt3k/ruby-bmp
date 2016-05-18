@@ -6,6 +6,8 @@ Metrics/AbcSize:
   Enabled: false
 Metrics/PerceivedComplexity:
   Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
 Style/CyclomaticComplexity:
   Enabled: false
 
