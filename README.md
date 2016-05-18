@@ -1,5 +1,4 @@
 # Bmp v1.3.0
-
 [![Gem Version](https://img.shields.io/gem/v/bmp.svg)](http://badge.fury.io/rb/bmp)
 [![Build Status](https://img.shields.io/travis/kt3k/bmp.svg)](https://travis-ci.org/kt3k/bmp)
 [![Coverage Status](https://img.shields.io/coveralls/kt3k/bmp.svg)](https://coveralls.io/r/kt3k/bmp)
@@ -9,7 +8,7 @@
 
 `bmp` command bumps and updates the version numbers in a repository according to the yaml file `.bmp.yml`. This is convenient if you have written many version numbers in your repository. This command helps you consistently update the version information in your repository.
 
-## Installation
+## Install
 
 ```sh
 gem install bmp
@@ -116,3 +115,43 @@ And this command also tag it as `vX.Y.Z`.
 # License
 
 MIT
+
+# Development
+
+## dev commands
+
+### dependency download
+
+    bundle install
+
+### lint
+
+    rake rubocop
+
+### test
+
+    rake spec
+
+### install dev version
+
+    rake install
+
+### release
+
+    rake release
+
+## Domain models
+
+Domain models are in `./lib/bump/domain` dir.
+
+### VersionNumber
+
+`VersionNumber` model represents the version number and bumps itself with levels.
+
+### FileUpdateRule
+
+`FileUpdateRule` model represents unit rule of version number replacement. A rule has a version number, a file path and a pattern for replacement.
+
+### BumpInfo
+
+`BumpInfo` model represents overall bumping strategy in a project. This model loosely corresponds to the contents of `.bmp.yml`.
