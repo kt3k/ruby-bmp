@@ -56,9 +56,7 @@ module Bump
         # @return [Array<Bump::FileUpdateRule>]
         def createUpdateRules
             @files.map do |file, pattern|
-
                 FileUpdateRuleFactory.create(file, pattern, @before_version, @after_version)
-
             end.flatten
         end
 
@@ -73,9 +71,7 @@ module Bump
         # @return [Boolean]
         def valid?
             createUpdateRules.each do |rule|
-
                 return false if !rule.fileExists || !rule.patternExists
-
             end
 
             true

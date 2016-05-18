@@ -1,9 +1,6 @@
 describe Bump::Command do
-
     describe '#exec' do
-
         it 'prints and executes the command' do
-
             logger = Bump::Logger.new
 
             comm = Bump::Command.new logger
@@ -14,9 +11,6 @@ describe Bump::Command do
             expect(logger).to receive(:log).with("1\n", nil).once
 
             comm.exec 'echo 1'
-
         end
-
     end
-
 end

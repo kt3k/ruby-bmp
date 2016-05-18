@@ -3,7 +3,6 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'bump/version'
 
 Gem::Specification.new do |spec|
-
     spec.name          = 'bmp'
     spec.version       = Bump::VERSION
     spec.authors       = ['Yoshiya Hinosawa']
@@ -22,5 +21,4 @@ Gem::Specification.new do |spec|
 
     spec.add_development_dependency 'bundler', '~> 1.3'
     spec.add_development_dependency 'rake'
-
 end

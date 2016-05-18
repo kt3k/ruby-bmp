@@ -87,9 +87,7 @@ module Bump
             log 'Version patterns:'
 
             bump_info.updateRules.each do |rule|
-
                 print_rule rule
-
             end
         end
 
@@ -97,22 +95,18 @@ module Bump
         # @param [Bump::FileUpdateRule] rule The rule
         def print_rule(rule)
             unless rule.fileExists
-
                 log_red "  #{rule.file}:", false
                 log_red " '#{rule.beforePattern}' (file not found)"
 
                 return
-
             end
 
             log "  #{rule.file}:", false
 
             unless rule.patternExists
-
                 log_red " '#{rule.beforePattern}' (pattern not found)"
 
                 return
-
             end
 
             log_green " '#{rule.beforePattern}'"
@@ -148,12 +142,10 @@ module Bump
         # @return [void]
         def report(bump_info)
             bump_info.updateRules.each do |rule|
-
                 log rule.file.to_s
                 log '  Performed pattern replacement:'
                 log_green "    '#{rule.beforePattern}' => '#{rule.afterPattern}'"
                 log
-
             end
         end
 
@@ -166,14 +158,12 @@ module Bump
             return false if bump_info.nil?
 
             [:major, :minor, :patch].each do |level|
-
                 next unless @options[level]
 
                 bump_info.bump level
                 log "Bump #{level} level"
                 log_green "  #{bump_info.before_version} => #{bump_info.after_version}"
                 break
-
             end
 
             if @options[:preid]
