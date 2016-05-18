@@ -65,7 +65,7 @@ module Bump
             repo = BumpInfoRepository.new @file
 
             begin
-                bump_info = repo.fromFile
+                bump_info = repo.from_file
             rescue Errno::ENOENT
                 log_red "Error: the file `#{@file}` not found."
                 return nil
@@ -92,7 +92,7 @@ module Bump
 
             log 'Version patterns:'
 
-            bump_info.updateRules.each do |rule|
+            bump_info.update_rules.each do |rule|
                 print_rule rule
             end
         end
@@ -100,22 +100,22 @@ module Bump
         # Prints the pattern info for the given rule
         # @param [Bump::FileUpdateRule] rule The rule
         def print_rule(rule)
-            unless rule.fileExists
+            unless rule.file_exists
                 log_red "  #{rule.file}:", false
-                log_red " '#{rule.beforePattern}' (file not found)"
+                log_red " '#{rule.before_pattern}' (file not found)"
 
                 return
             end
 
             log "  #{rule.file}:", false
 
-            unless rule.patternExists
-                log_red " '#{rule.beforePattern}' (pattern not found)"
+            unless rule.pattern_exists
+                log_red " '#{rule.before_pattern}' (pattern not found)"
 
                 return
             end
 
-            log_green " '#{rule.beforePattern}'"
+            log_green " '#{rule.before_pattern}'"
         end
 
         # handler of `bmp [--info]`
@@ -145,10 +145,10 @@ module Bump
         # Reports the bumping details.
         # @param [Bump::BumpInfo] bumpInfo
         def report(bump_info)
-            bump_info.updateRules.each do |rule|
+            bump_info.update_rules.each do |rule|
                 log rule.file.to_s
                 log '  Performed pattern replacement:'
-                log_green "    '#{rule.beforePattern}' => '#{rule.afterPattern}'"
+                log_green "    '#{rule.before_pattern}' => '#{rule.after_pattern}'"
                 log
             end
         end
@@ -168,7 +168,7 @@ module Bump
                 return false
             end
 
-            bump_info.performUpdate
+            bump_info.perform_update
 
             report bump_info
 
@@ -214,7 +214,7 @@ module Bump
         # Prints the bump plan for the give preid.
         # @param [Bump::BumpInfo] bump_info The bump info
         def print_bump_plan_preid(preid, bump_info)
-            bump_info.setPreid preid
+            bump_info.preid = preid
 
             log 'Set pre-release version id: ', false
             log_green preid
@@ -224,7 +224,7 @@ module Bump
         # Prints the bump plan for the release
         # @param [Bump::BumpInfo] bump_info The bump info
         def print_bump_plan_release(bump_info)
-            bump_info.setPreid nil
+            bump_info.preid = nil
 
             log 'Remove pre-release version id'
             print_version_transition bump_info
@@ -241,7 +241,7 @@ module Bump
         def commit_and_tag(bump_info)
             @logger.log '===> executing commands'
             @command.exec 'git add .'
-            @command.exec "git commit -m '#{bump_info.getCommitMessage}'"
+            @command.exec "git commit -m '#{bump_info.commit_message}'"
             @command.exec "git tag v#{bump_info.after_version}"
         end
 

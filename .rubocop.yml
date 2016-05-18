@@ -1,15 +1,11 @@
 Metrics/LineLength:
   Enabled: false
+Metrics/MethodLength:
+  Max: 50
 Metrics/ClassLength:
-  Enabled: false
+  Max: 300
 Metrics/ParameterLists:
   Enabled: false
 
 Style/IndentationWidth:
   Width: 4
-
-Style/MethodName:
-  Enabled: false
-
-Style/MethodLength:
-  Max: 50

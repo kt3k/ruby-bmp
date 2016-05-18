@@ -13,9 +13,9 @@ module Bump
         #
         # @param [String] file
         # @return [Bump::BumpInfo]
-        def fromFile
+        def from_file
             config = YAML.load_file @file
-            version = VersionNumberFactory.fromString config['version']
+            version = VersionNumberFactory.from_string config['version']
 
             BumpInfo.new version, config['files'], config['commit']
         end
@@ -25,13 +25,13 @@ module Bump
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
         def save(bump_info)
-            File.write @file, toYaml(bump_info)
+            File.write @file, to_yaml(bump_info)
         end
 
         # @private
         # @param [Bump::BumpInfo] bumpInfo
         # @return [Hash]
-        def toYaml(bump_info)
+        def to_yaml(bump_info)
             hash = { 'version' => bump_info.version.to_s }
 
             hash['commit'] = bump_info.commit if bump_info.commit
