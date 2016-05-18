@@ -12,12 +12,15 @@ module Bump
         # @param [String] version The version expression of this command
         # @param [String] file The file name of bump info file
         # @param [Bump::Logger] logger The logger
-        def initialize(options, help, version, file, logger)
+        # @param [Bump::Command] logger The command executer
+        def initialize(options, help, version, file, logger, command = nil)
             @options = options
             @help = help
             @version = version
             @file = file
             @logger = logger
+            @command = command
+            @command = Bump::Command.new @logger if @command.nil?
         end
 
         # Returns a symbol which represents the action to perform.
@@ -205,13 +208,11 @@ module Bump
 
             saveBumpInfo bump_info
 
-            comm = Command.new @logger
-
             if @options[:commit]
                 @logger.log '===> executing commands'
-                comm.exec 'git add .'
-                comm.exec "git commit -m '#{bump_info.getCommitMessage}'"
-                comm.exec "git tag v#{bump_info.after_version}"
+                @command.exec 'git add .'
+                @command.exec "git commit -m '#{bump_info.getCommitMessage}'"
+                @command.exec "git tag v#{bump_info.after_version}"
             end
 
             return true

@@ -133,5 +133,23 @@ describe Bump::Application do
                 File.delete 'spec/fixture/tmp_dummy.txt'
             end
         end
+
+        describe 'with :commit options' do
+            it 'executes git commands if there is no error' do
+                File.write 'spec/fixture/tmp_bmp_tmp.yml', File.read('spec/fixture/bmp_tmp.yml', encoding: Encoding::UTF_8)
+                File.write 'spec/fixture/tmp_dummy.txt', File.read('spec/fixture/dummy.txt', encoding: Encoding::UTF_8)
+
+                command = double 'command'
+
+                app = Bump::Application.new({ patch: true, commit: true }, @help_message, @version_exp, 'spec/fixture/tmp_bmp_tmp.yml', @logger, command)
+
+                expect(command).to receive(:exec).thrice
+
+                expect(app.main).to be true
+
+                File.delete 'spec/fixture/tmp_bmp_tmp.yml'
+                File.delete 'spec/fixture/tmp_dummy.txt'
+            end
+        end
     end
 end
