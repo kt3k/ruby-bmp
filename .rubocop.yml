@@ -6,6 +6,3 @@ Metrics/ClassLength:
   Max: 300
 Metrics/ParameterLists:
   Enabled: false
-
-Style/IndentationWidth:
-  Width: 4
