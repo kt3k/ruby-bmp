@@ -44,7 +44,7 @@ module Bump
         def actionVersion
             log @version
 
-            return true
+            true
         end
 
         # handler of `bmp --help`
@@ -53,7 +53,7 @@ module Bump
         def actionHelp
             log @help
 
-            return true
+            true
         end
 
         # Gets the bump info
@@ -64,7 +64,7 @@ module Bump
 
             begin
                 bump_info = repo.fromFile
-            rescue Errno::ENOENT => e
+            rescue Errno::ENOENT
                 log_red "Error: the file `#{@file}` not found."
                 return nil
             end
@@ -132,7 +132,7 @@ module Bump
 
             showVersionPatterns bump_info
 
-            return bump_info.is_valid
+            bump_info.valid?
         end
 
         # Checks the bumping is possible.
@@ -196,7 +196,7 @@ module Bump
 
             log
 
-            if !bump_info.is_valid
+            unless bump_info.valid?
                 print_invalid_bump_info bump_info
 
                 return false
@@ -215,7 +215,7 @@ module Bump
                 @command.exec "git tag v#{bump_info.after_version}"
             end
 
-            return true
+            true
         end
 
         # The entry point
