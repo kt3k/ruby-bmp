@@ -76,61 +76,50 @@ describe Bump::Application do
 
     describe '#main' do
 
-        it 'logs version when the version option is given' do
+        it 'logs version and returns true when the version option is given' do
 
             expect(@logger).to receive(:log).with("Bmp #{Bump::VERSION}", true).once
 
             app = Bump::Application.new({ version: true }, @help_message, @version_exp, @bmp_file, @logger)
-            app.main
+            expect(app.main).to be true
 
         end
 
-        it 'logs help message when the help option is given' do
+        it 'logs help message and returns true when the help option is given' do
 
             expect(@logger).to receive(:log).with('help_message', true).once
 
             app = Bump::Application.new({ help: true }, @help_message, @version_exp, @bmp_file, @logger)
-            app.main
+            expect(app.main).to be true
 
         end
 
-        it 'shows bump info and exit 0 when there is no error' do
+        it 'shows bump info and return true when there is no error' do
 
             app = Bump::Application.new({ info: true }, @help_message, @version_exp, @bmp_file, @logger)
-            allow(app).to receive(:exit)
 
-            expect(app).to receive(:exit).with(0).once
-
-            app.main
+            expect(app.main).to be true
 
         end
 
-        it 'shows bump info and exit 1 when there are errors' do
+        it 'shows bump info and returns false when there are errors' do
 
             app = Bump::Application.new({ info: true }, @help_message, @version_exp, 'spec/fixture/bmp_invalid.yml', @logger)
 
-            expect(app).to receive(:exit).with(1).once
-
-            app.main
+            expect(app.main).to be false
 
         end
 
         it 'exits 1 when the pattern in bmp.yml not found' do
             app = Bump::Application.new({ info: true }, @help_message, @version_exp, 'spec/fixture/bmp_invalid_pattern.yml', @logger)
 
-            expect(app).to receive(:exit).with(1).once
-            allow(app).to receive(:exit) { throw StandardError.new }
-
-            expect { app.main }.to raise_error(StandardError)
+            expect(app.main).to be false
         end
 
         it 'exits 1 when the bmp.yml not found' do
             app = Bump::Application.new({ info: true }, @help_message, @version_exp, 'spec/fixture/bmp_not_exists.yml', @logger)
 
-            expect(app).to receive(:exit).with(1).once
-            allow(app).to receive(:exit) { throw StandardError.new }
-
-            expect { app.main }.to raise_error(StandardError)
+            expect(app.main).to be false
         end
     end
 end

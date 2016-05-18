@@ -21,7 +21,6 @@ module Bump
         end
 
         # Returns a symbol which represents the action to perform.
-        #
         # @return [Symbol]
         def selectAction
             return :help if @options[:help]
@@ -41,6 +40,8 @@ module Bump
         # @return [void]
         def actionVersion
             log @version
+
+            return true
         end
 
         # handler of `bmp --help`
@@ -48,10 +49,12 @@ module Bump
         # @return [void]
         def actionHelp
             log @help
+
+            return true
         end
 
         # Gets the bump info
-        #
+        # @private
         # @return [Bump::BumpInfo]
         def getBumpInfo
             repo = BumpInfoRepository.new @file
@@ -60,7 +63,7 @@ module Bump
                 bump_info = repo.fromFile
             rescue Errno::ENOENT => e
                 log_red "Error: the file `#{@file}` not found."
-                exit 1
+                return nil
             end
 
             bump_info
@@ -122,29 +125,22 @@ module Bump
         def actionInfo
             bump_info = getBumpInfo
 
+            return false if bump_info.nil?
+
             showVersionPatterns bump_info
 
-            if bump_info.is_valid
-                exit 0
-            else
-                exit 1
-            end
+            return bump_info.is_valid
         end
 
         # Checks the bumping is possible.
-        #
         # @param [Bump::BumpInfo] bumpInfo
         # @return [void]
-        def checkBumpInfo(bump_info)
-            return if bump_info.is_valid
-
+        def print_invalid_bump_info(bump_info)
             log_red 'Some patterns are invalid!'
             log_red 'Stops updating version numbers.'
             log
 
             showVersionPatterns bump_info
-
-            exit 1
         end
 
         # Reports the bumping details.
@@ -167,6 +163,8 @@ module Bump
         # @return [void]
         def actionBump
             bump_info = getBumpInfo
+
+            return false if bump_info.nil?
 
             [:major, :minor, :patch].each do |level|
 
@@ -195,7 +193,11 @@ module Bump
 
             log
 
-            checkBumpInfo bump_info
+            if !bump_info.is_valid
+                print_invalid_bump_info bump_info
+
+                return false
+            end
 
             bump_info.performUpdate
 
@@ -211,6 +213,8 @@ module Bump
                 comm.exec "git commit -m '#{bump_info.getCommitMessage}'"
                 comm.exec "git tag v#{bump_info.after_version}"
             end
+
+            return true
         end
 
         # The entry point

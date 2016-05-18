@@ -2,4 +2,4 @@
 
 require 'bump'
 
-Bump::CLI.new.main
+exit Bump::CLI.new.main
