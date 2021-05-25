@@ -1,3 +1,5 @@
+**Note**: I ported this tool to [Deno](https://deno.land). See [this repository](https://github.com/kt3k/bmp) instead.
+
 # Bmp v1.3.1
 [![Gem Version](https://img.shields.io/gem/v/bmp.svg)](http://badge.fury.io/rb/bmp)
 [![Build Status](https://img.shields.io/travis/kt3k/bmp.svg)](https://travis-ci.org/kt3k/bmp)
